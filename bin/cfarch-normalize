@@ -1,0 +1,34 @@
+#!/opt/bin/perl
+
+use Deliantra;
+
+load_archetypes;
+
+for my $path (@ARGV) {
+   eval {
+      {
+         open my $fh, "<:raw:perlio:utf8", $path
+            or die "$path: $!\n";
+
+         sysread $fh, my $buf, 8192;
+         $buf =~ /^Object \S+\n.*^end$/ism
+            or die "$path: not a crossfire arch file\n";
+      }
+
+      my $arch = read_arch ($path);
+
+      $arch = [
+         map $arch->{$_},
+            sort keys %$arch
+      ];
+
+      open my $fh, ">:raw:utf8", "$path~" or Carp::croak "$path~: $!";
+      print $fh Deliantra::archlist_to_string ($arch)
+                                          or Carp::croak "$path~: $!";
+      close $fh                           or Carp::croak "$path~: $!";
+      rename "$path~", $path;
+
+      1
+   } or warn $@;
+}
+

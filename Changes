@@ -1,0 +1,47 @@
+
+1.14 Wed Dec 26 19:12:04 CET 2007
+	- renamed from Crossfire to Deliantra.
+
+1.13 Wed Dec  5 12:38:58 CET 2007
+	- really switch to JSON::XS 2.01.
+
+1.12 Wed Dec  5 12:01:05 CET 2007
+	- switch to JSON::XS 2.01.
+
+1.11 Thu Nov  8 02:21:06 CET 2007
+	- add cfmap-tagify, which was missing.
+
+1.1  Sat Oct 20 23:49:15 CEST 2007
+	- started to remove crossfire compatibility cruft.
+
+1.0  Sun Sep  2 10:45:36 CEST 2007
+	- better support for new facedata structure.
+        - support use Crossfire::MoveType for thawing.
+        - use customised json encoder/decoder.
+        - actually allow multiple simul. transfers
+          in ix (as allowed by the protocol),
+          sending as version 2 of fxsxix.
+        - updated/fixed msg protocol (version 2).
+        - fix import of attribute types.
+
+0.99 Mon May 28 23:32:53 CEST 2007
+	- elmex claims to have something done but of course didn't give a shit
+          about documenting it even with a single line.
+
+0.98 Wed May  9 13:44:15 CEST 2007
+	- switch to JSON::XS.
+        - much better setup negotiation capabilities.
+        - incompatibly changed some interfaces to allow
+          for callback-driven programming styles.
+
+0.97 Mon Mar  5 02:07:42 CET 2007
+	- fix movement type handling.
+
+0.96 Thu Jan 25 06:13:37 CET 2007
+	- bug/portability fixes.
+
+0.92 Wed Oct 18 14:57:04 CEST 2006
+	- bug/portability fixes.
+
+0.9  Tue Sep 12 22:27:17 CEST 2006
+	- many bugfixes. blurp.

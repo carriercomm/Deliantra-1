@@ -21,6 +21,8 @@ our $VERSION = '0.98';
 use strict;
 
 use AnyEvent;
+use AnyEvent::Socket ();
+
 use IO::Socket::INET;
 
 use Deliantra::Protocol::Constants;
@@ -34,8 +36,8 @@ use JSON::XS ();
 sub new {
    my $class = shift;
    my $self = bless {
-      host            => "crossfire.schmorp.de",
-      port            => "13327",
+      host            => "gameserver.deliantra.net",
+      port            => "deliantra=13327",
       mapw            => 13,
       maph            => 13,
       max_outstanding => 2,
@@ -47,26 +49,37 @@ sub new {
       @_
    }, $class;
 
-   $self->{fh} = new IO::Socket::INET PeerHost => $self->{host}, PeerPort => $self->{port}
-      or die "$self->{host}:$self->{port}: $!";
-   $self->{fh}->blocking (0); # stupid nonblock default
+   $self->{fh_guard} = AnyEvent::Socket::tcp_connect $self->{host}, $self->{port}, sub {
+      if (my ($fh) = @_) {
+         $self->{fh} = $fh;
 
-   my $buf;
+         setsockopt $fh, &Socket::IPPROTO_TCP, &Socket::TCP_NODELAY, 1;
 
-   $self->{w} = AnyEvent->io (fh => $self->{fh}, poll => 'r', cb => sub {
-      if (0 < sysread $self->{fh}, $buf, 16384, length $buf) {
-         for (;;) {
-            last unless 2 <= length $buf;
-            my $len = unpack "n", $buf;
-            last unless $len + 2 <= length $buf;
+         my $buf;
+         $self->{rw} = AnyEvent->io (fh => $fh, poll => 'r', cb => sub {
+            if (0 < sysread $fh, $buf, 16384, length $buf) {
+               for (;;) {
+                  last unless 2 <= length $buf;
+                  my $len = unpack "n", $buf;
+                  last unless $len + 2 <= length $buf;
 
-            substr $buf, 0, 2, "";
-            $self->feed (substr $buf, 0, $len, "");
-         }
+                  substr $buf, 0, 2, "";
+                  $self->feed (substr $buf, 0, $len, "");
+               }
+            } else {
+               $self->feed_eof;
+            }
+         });
+
+         $self->_drain_wbuf;
+
+         $self->{on_connect}->(1) if $self->{on_connect};
       } else {
          $self->feed_eof;
+
+         $self->{on_connect}->(0) if $self->{on_connect};
       }
-   });
+   };
 
    $self->{setup} = {
       #sound             => 0,
@@ -133,6 +146,27 @@ sub feed_version {
    chomp $version;
 
    $self->{version} = $version;
+}
+
+sub _drain_wbuf {
+   my ($self) = @_;
+
+   return unless $self->{fh};
+
+   unless ($self->{ww}) {
+      my $cb = sub {
+         my $len = syswrite $self->{fh}, $self->{wbuf};
+         substr $self->{wbuf}, 0, $len, "" if $len > 0;
+         delete $self->{ww} unless length $self->{wbuf};
+      };
+
+      # try write immediately
+      $cb->();
+
+      # still data, so queue
+      $self->{ww} = AnyEvent->io (fh => $self->{fh}, poll => "w", cb => $cb)
+         if length $self->{wbuf};
+   }
 }
 
 =back
@@ -226,7 +260,10 @@ sub feed_setup {
 sub feed_eof {
    my ($self) = @_;
 
-   delete $self->{w};
+   delete $self->{wbuf};
+   delete $self->{rw};
+   delete $self->{ww};
+   delete $self->{fh_guard};
    close delete $self->{fh};
 
    for my $tag (sort { $b <=> $a } %{ $self->{container} || {} }) {
@@ -697,7 +734,8 @@ sub feed_upditem {
    if ($tag == $self->{player}{tag}) {
       $item = $self->{player};
    } else {
-      $item = $self->{item}{$tag};
+      $item = $self->{item}{$tag}
+         or warn "received item update for unseen item $tag\n";
    }
 
    if ($flags & UPD_LOCATION) {
@@ -778,9 +816,9 @@ sub feed_addspell {
          tag          => (shift @data),
          level        => (shift @data),
          casting_time => (shift @data),
-         mana         => (shift @data),
-         grace        => (shift @data),
-         damage       => (shift @data),
+         mana         => (unpack "s", pack "S", shift @data),
+         grace        => (unpack "s", pack "S", shift @data),
+         damage       => (unpack "s", pack "S", shift @data),
          skill        => (shift @data),
          path         => (shift @data),
          face         => (shift @data),
@@ -802,9 +840,9 @@ sub feed_updspell {
    
    my $spell = $self->{spell}{$tag};
 
-   $spell->{mana}   = unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_MANA;
-   $spell->{grace}  = unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_GRACE;
-   $spell->{damage} = unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_DAMAGE;
+   $spell->{mana}   = unpack "s", pack "S", unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_MANA;
+   $spell->{grace}  = unpack "s", pack "S", unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_GRACE;
+   $spell->{damage} = unpack "s", pack "S", unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_DAMAGE;
    
    $self->spell_update ($spell);
 }
@@ -1024,9 +1062,8 @@ Send a single packet/line to the server.
 sub send {
    my ($self, $data) = @_;
 
-   $data = pack "na*", length $data, $data;
-
-   syswrite $self->{fh}, $data;
+   $self->{wbuf} .= pack "na*", length $data, $data;
+   $self->_drain_wbuf;
 }
 
 =item $conn->send_utf8 ($data)

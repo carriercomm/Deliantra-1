@@ -6,7 +6,7 @@ Deliantra - Deliantra suppport module to read/write archetypes, maps etc.
 
 package Deliantra;
 
-our $VERSION = '1.14';
+our $VERSION = '1.2';
 
 use strict;
 
@@ -490,7 +490,7 @@ sub attr_thaw($) {
 sub attr_freeze($) {
    my ($ob) = @_;
 
-   $ob->{attach} = Deliantra::encode_json $ob->{attach}
+   $ob->{attach} = JSON::XS->new->utf8->canonical->encode ($ob->{attach})
       if exists $ob->{attach};
 
    $ob

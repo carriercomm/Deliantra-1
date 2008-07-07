@@ -8,7 +8,7 @@ my $mm = MM->new({
        SUFFIX	=> '.gz',
     },
     PREREQ_PM   => {
-       AnyEvent => 0,
+       AnyEvent => 4,
        JSON::XS => 2.01,
     },
     NAME         => "Deliantra",

@@ -329,8 +329,16 @@ our %DEFAULT_ATTR = (
     [
       'face',
       {
-	desc => 'The image-name defines what image is displayed for this object in-game.',
+	desc => 'The image-name defines what image is displayed for this object in-game. Take care if the archetype of the object has an animation! See also the \'animation\' attribute.',
 	name => 'image',
+	type => 'string'
+      }
+    ],
+    [
+      'animation',
+      {
+	desc => 'The animation-name of the object. If you assign custom faces and the archetype defines an animation you can disable the animation of an archetype by setting this field to NONE.',
+	name => 'animation',
 	type => 'string'
       }
     ],
@@ -523,7 +531,7 @@ our %TYPE = (
       [
 	'slaying',
 	{
-	  desc => 'This string specifies the item that must be put on the altar to activate it. It can either be the name of an archetype, or directly the name of an object. Yet, titles are not recognized by altars. Remember to put a note somewhere, telling the player what he is expected to drop on the altar. (Often this is put in the altar\'s name: E.g. "drop 100 platinums")',
+	  desc => 'This string specifies the item that must be put on the altar to activate it. It can either be the name of an archetype, or directly the name of an object. Yet, titles are not recognized by altars. If you want the player to have to drop a specific amount of money use "money". See also the "drop amount" attribute.',
 	  name => 'match item name',
 	  type => 'string'
 	}
@@ -580,7 +588,7 @@ our %TYPE = (
       [
 	'slaying',
 	{
-	  desc => 'This string specifies the item that must be put on the altar to activate it. It can either be the name of an archetype, or directly the name of an object. Yet, titles are not recognized by altars. Remember to put a note somewhere, telling the player what he is expected to drop on the altar. (Often this is put in the altar\'s name: E.g. "drop 100 platinums")',
+	  desc => 'This string specifies the item that must be put on the altar to activate it. It can either be the name of an archetype, or directly the name of an object. Yet, titles are not recognized by altars. If you want the player to have to drop a specific amount of money use "money". See also the "drop amount" attribute.',
 	  name => 'match item name',
 	  type => 'string'
 	}

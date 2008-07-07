@@ -643,7 +643,13 @@
     attached to the name. Typical titles are "of Mostrai", "of xray vision" etc.
   </attribute>
   <attribute arch="face" editor="image" type="string">
-    The image-name defines what image is displayed for this object in-game.
+    The image-name defines what image is displayed for this object in-game. Take care if the archetype of the
+    object has an animation! See also the 'animation' attribute.
+  </attribute>
+  <attribute arch="animation" editor="animation" type="string">
+    The animation-name of the object. If you assign custom faces and the archetype
+    defines an animation you can disable the animation of an archetype by setting this
+    field to NONE.
   </attribute>
   <attribute arch="tag" editor="tag" type="string">
     You can tag objects with an identifier. Tagged objects can be found quickly
@@ -854,9 +860,8 @@
     This string specifies the item that must be put on the altar to
     activate it. It can either be the name of an archetype, or directly
     the name of an object. Yet, titles are not recognized by altars.
-    Remember to put a note somewhere, telling the player what he is
-    expected to drop on the altar. (Often this is put in the altar's
-    name: E.g. "drop 100 platinums")
+    If you want the player to have to drop a specific amount of money use "money".
+    See also the "drop amount" attribute.
   </attribute>
   <attribute arch="food" editor="drop amount" type="int">
     The drop amount specifies the amount of items (specified
@@ -910,9 +915,8 @@
     This string specifies the item that must be put on the altar to
     activate it. It can either be the name of an archetype, or directly
     the name of an object. Yet, titles are not recognized by altars.
-    Remember to put a note somewhere, telling the player what he is
-    expected to drop on the altar. (Often this is put in the altar's
-    name: E.g. "drop 100 platinums")
+    If you want the player to have to drop a specific amount of money use "money".
+    See also the "drop amount" attribute.
   </attribute>
   <attribute arch="food" editor="drop amount" type="int">
     The drop amount specifies the amount of items (specified

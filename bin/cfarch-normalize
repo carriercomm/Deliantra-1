@@ -12,7 +12,7 @@ for my $path (@ARGV) {
 
          sysread $fh, my $buf, 8192;
          $buf =~ /^Object \S+\n.*^end$/ism
-            or die "$path: not a crossfire arch file\n";
+            or die "$path: not a deliantra arch file\n";
       }
 
       my $arch = read_arch ($path);

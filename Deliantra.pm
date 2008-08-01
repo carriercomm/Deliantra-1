@@ -6,7 +6,7 @@ Deliantra - Deliantra suppport module to read/write archetypes, maps etc.
 
 package Deliantra;
 
-our $VERSION = '1.2';
+our $VERSION = '1.21';
 
 use strict;
 
@@ -26,11 +26,7 @@ our @EXPORT = qw(
 
 use JSON::XS qw(decode_json encode_json);
 
-our $LIB = $ENV{DELIANTRA_LIBDIR} || $ENV{CROSSFIRE_LIBDIR};
-
-our $OLDDIR = $ENV{HOME}    ? "$ENV{HOME}/.crossfire"
-            : $ENV{AppData} ? "$ENV{APPDATA}/crossfire"
-            : File::Spec->tmpdir . "/crossfire";
+our $LIB = $ENV{DELIANTRA_LIBDIR};
 
 our $VARDIR = $ENV{HOME}    ? "$ENV{HOME}/.deliantra"
             : $ENV{AppData} ? "$ENV{APPDATA}/deliantra"

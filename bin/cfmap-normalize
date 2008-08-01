@@ -8,7 +8,7 @@ for my $path (@ARGV) {
          or die "$path: $!\n";
 
       <$fh> =~ /^arch map$/
-         or die "$path: not a crossfire map file\n";
+         or die "$path: not a deliantra map file\n";
 
       my $map = new_from_file Deliantra::Map $path
          or die "$path: file load error\n";

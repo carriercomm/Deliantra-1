@@ -504,7 +504,7 @@ our %TYPE = (
 	}
       ]
     ],
-    desc => 'Abilities are to be put in a monster\'s inventory. They grant monsters the knowledge to cast spells. Spells from abilities are usually magical in nature, thus adding magic attacktype to the spell-damage they produce. <br><br> A particularly nice feature of abilities is that they can hold two spells: One for short range- and one for long range use. \\n\\n You should know that spellcasting monsters receive abilities via &lt;treasurelist&gt;.',
+    desc => 'Abilities are to be put in a monster\'s inventory. They grant monsters the knowledge to cast spells. Spells from abilities are usually magical in nature, thus adding magic attacktype to the spell-damage they produce. <br><br> A particularly nice feature of abilities is that they can hold two spells: One for short range - and one for long range use. \\n\\n You should know that spellcasting monsters receive abilities via &lt;treasurelist&gt;.',
     ignore => [
       $IGNORE_LIST{system_object}
     ],
@@ -1603,7 +1603,7 @@ our %TYPE = (
 	'activate_on_push',
 	{
 	  desc => 'Whether the teleporter should only be activated on push.',
-	  name => 'Activate on push',
+	  name => 'activate on push',
 	  type => 'bool'
 	}
       ],
@@ -1611,7 +1611,7 @@ our %TYPE = (
 	'activate_on_release',
 	{
 	  desc => 'Whether the teleporter should only be activated on release.',
-	  name => 'Activate on release',
+	  name => 'activate on release',
 	  type => 'bool'
 	}
       ],
@@ -2124,7 +2124,7 @@ our %TYPE = (
 	'activate_on_push',
 	{
 	  desc => 'Whether the teleporter should only be activated on push.',
-	  name => 'Activate on push',
+	  name => 'activate on push',
 	  type => 'bool'
 	}
       ],
@@ -2132,7 +2132,7 @@ our %TYPE = (
 	'activate_on_release',
 	{
 	  desc => 'Whether the teleporter should only be activated on release.',
-	  name => 'Activate on release',
+	  name => 'activate on release',
 	  type => 'bool'
 	}
       ]
@@ -2145,7 +2145,7 @@ our %TYPE = (
     use => 'I hope it is clear that one must be very cautious when inserting a duplicator anywhere with &lt;multiply factor&gt; greater than one. It is designed to be used for betting mechanisms only (bet -&gt; win/loose). It is <b>not acceptable</b> to allow duplication of anything other than coins, gold and jewels. Besides, it is very important that the chance to loose the input matches the chance to earn winnings.<br> A duplicator with &lt;multiply factor&gt; 3 for example should have a loosing rate of 2/3 = 67%.'
   },
   'Event Connector' => {
-    desc => 'Event connectors link specific events that happen to objects to a crossfire plug-in. They are not used at all in Deliantra',
+    desc => 'Event connectors link specific events that happen to objects to a crossfire plug-in. They are not used at all in Deliantra.',
     name => 'Event Connector'
   },
   Exit => {
@@ -3525,7 +3525,7 @@ our %TYPE = (
 	'activate_on_push',
 	{
 	  desc => 'Whether the teleporter should only be activated on push.',
-	  name => 'Activate on push',
+	  name => 'activate on push',
 	  type => 'bool'
 	}
       ],
@@ -3533,7 +3533,7 @@ our %TYPE = (
 	'activate_on_release',
 	{
 	  desc => 'Whether the teleporter should only be activated on release.',
-	  name => 'Activate on release',
+	  name => 'activate on release',
 	  type => 'bool'
 	}
       ],
@@ -4810,6 +4810,14 @@ our %TYPE = (
 	}
       ],
       [
+	'range',
+	{
+	  desc => 'The radius of the square area that the pit will randomly put the player into (0 to 3, default 1).',
+	  name => 'spread radius',
+	  type => 'int'
+	}
+      ],
+      [
 	'connected',
 	{
 	  desc => 'When a <connection> value is set, the pit can be opened/closed by activating the connection.',
@@ -4821,7 +4829,7 @@ our %TYPE = (
 	'activate_on_push',
 	{
 	  desc => 'Whether the teleporter should only be activated on push.',
-	  name => 'Activate on push',
+	  name => 'activate on push',
 	  type => 'bool'
 	}
       ],
@@ -4829,7 +4837,7 @@ our %TYPE = (
 	'activate_on_release',
 	{
 	  desc => 'Whether the teleporter should only be activated on release.',
-	  name => 'Activate on release',
+	  name => 'activate on release',
 	  type => 'bool'
 	}
       ],
@@ -4866,7 +4874,7 @@ our %TYPE = (
 	}
       ]
     ],
-    desc => 'Pits are holes, transporting the player when he walks (and falls) into them. A speciality about pits is that they don\'t transport the player to the exact destination, but within a two-square radius of the destination (never on blocked squares).<br> Optionally, pits can get closed and opened, similar to gates.<br><br> Monsters and items are affected by pits just as well as players. Even multipart monsters can fall through them, given enough space.',
+    desc => 'Pits are holes, transporting the player when he walks (and falls) into them. A speciality about pits is that they don\'t transport the player to the exact destination, but within a configurable radius of the destination (never on blocked squares).<br> Optionally, pits can get closed and opened, similar to gates.<br><br> Monsters and items are affected by pits just as well as players. Even multipart monsters can fall through them, given enough space.',
     ignore => [
       $IGNORE_LIST{non_pickable}
     ],
@@ -5908,7 +5916,7 @@ our %TYPE = (
 	'activate_on_push',
 	{
 	  desc => 'Whether the teleporter should only be activated on push.',
-	  name => 'Activate on push',
+	  name => 'activate on push',
 	  type => 'bool'
 	}
       ],
@@ -5916,7 +5924,7 @@ our %TYPE = (
 	'activate_on_release',
 	{
 	  desc => 'Whether the teleporter should only be activated on release.',
-	  name => 'Activate on release',
+	  name => 'activate on release',
 	  type => 'bool'
 	}
       ],
@@ -6629,7 +6637,7 @@ our %TYPE = (
 	'activate_on_push',
 	{
 	  desc => 'Whether the teleporter should only be activated on push.',
-	  name => 'Activate on push',
+	  name => 'activate on push',
 	  type => 'bool'
 	}
       ],
@@ -6637,7 +6645,7 @@ our %TYPE = (
 	'activate_on_release',
 	{
 	  desc => 'Whether the teleporter should only be activated on release.',
-	  name => 'Activate on release',
+	  name => 'activate on release',
 	  type => 'bool'
 	}
       ],
@@ -6686,7 +6694,7 @@ our %TYPE = (
 	'activate_on_push',
 	{
 	  desc => 'Whether the teleporter should only be activated on push.',
-	  name => 'Activate on push',
+	  name => 'activate on push',
 	  type => 'bool'
 	}
       ],
@@ -6694,7 +6702,7 @@ our %TYPE = (
 	'activate_on_release',
 	{
 	  desc => 'Whether the teleporter should only be activated on release.',
-	  name => 'Activate on release',
+	  name => 'activate on release',
 	  type => 'bool'
 	}
       ],

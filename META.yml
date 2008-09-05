@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Deliantra
-version:             1.21
+version:             1.22
 abstract:            ~
 license:             ~
 author:              ~
@@ -8,6 +8,7 @@ generated_by:        ExtUtils::MakeMaker version 6.44
 distribution_type:   module
 requires:     
     AnyEvent:                      4
+    Compress::LZF:                 3.11
     JSON::XS:                      2.01
 meta-spec:
     url:     http://module-build.sourceforge.net/META-spec-v1.3.html

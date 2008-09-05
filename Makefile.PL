@@ -8,12 +8,13 @@ my $mm = MM->new({
        SUFFIX	=> '.gz',
     },
     PREREQ_PM   => {
-       AnyEvent => 4,
-       JSON::XS => 2.01,
+       AnyEvent      => 4,
+       JSON::XS      => 2.01,
+       Compress::LZF => 3.11,
     },
     NAME         => "Deliantra",
     VERSION_FROM => "Deliantra.pm",
-    EXE_FILES    => [qw(bin/cfarch-normalize bin/cfmap-normalize bin/cfarch-normalize bin/cfmap-plushify bin/cfmap-tagify)],
+    EXE_FILES    => [qw(bin/cfarch-normalize bin/cfmap-normalize bin/cfarch-normalize bin/cfmap-plushify bin/cfmap-tagify bin/cfxmlrender)],
 });
 
 $mm->flush;

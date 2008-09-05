@@ -16,12 +16,13 @@ Base class to implement a crossfire client.
 
 package Deliantra::Protocol::Base;
 
-our $VERSION = '0.98';
+our $VERSION = '1.22';
 
 use strict;
 
 use AnyEvent;
 use AnyEvent::Socket ();
+use Compress::LZF;
 
 use IO::Socket::INET;
 
@@ -96,6 +97,8 @@ sub new {
       fxix              => 3,
       excmd             => 1,
       msg               => 2,
+      lzf               => 1, # supports lzf packet
+      frag              => 1, # support fragmented packets
       %{$self->{setup_req} || {} },
    };
 
@@ -132,6 +135,22 @@ sub feed {
    };
 
    warn $@ if $@;
+}
+
+sub feed_lzf {
+   my ($self, $data) = @_;
+
+   $self->feed (decompress $data);
+}
+
+sub feed_frag {
+   my ($self, $data) = @_;
+
+   if (length $data) {
+      $self->{_frag} .= $data;
+   } else {
+      $self->feed (delete $self->{_frag});
+   }
 }
 
 sub feed_goodbye {
@@ -542,6 +561,7 @@ sub feed_ex {
    my ($self, $data) = @_;
 
    my ($tag, $text) = unpack "wa*", $data;
+   utf8::decode $text;
 
    if (my $q = delete $self->{cb_ex}{$tag}) {
       $_->($text, $tag) for @$q;

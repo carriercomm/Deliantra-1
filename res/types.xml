@@ -24,10 +24,10 @@
 #    list of attributes not to import from default_type              #
 # </ignore>                                                          #
 # <description><![CDATA[                                             #
-#   Description of this type. ]]>                                    #
+#   Description of this type.]]>                                     #
 # </description>                                                     #
 # <use><![CDATA[                                                     #
-#   How to use this type. ]]>                                        #
+#   How to use this type.]]>                                         #
 # </use>                                                             #
 # ... attributes ...                                                 #
 # </type>                                                            #
@@ -150,10 +150,10 @@
      </attribute>
   ">
   <!ENTITY activate_on "
-     <attribute arch='activate_on_push' editor='Activate on push' type='bool'>
+     <attribute arch='activate_on_push' editor='activate on push' type='bool'>
        Whether the teleporter should only be activated on push.
      </attribute>
-     <attribute arch='activate_on_release' editor='Activate on release' type='bool'>
+     <attribute arch='activate_on_release' editor='activate on release' type='bool'>
        Whether the teleporter should only be activated on release.
      </attribute>
   ">
@@ -790,10 +790,10 @@
     nature, thus adding magic attacktype to the spell-damage they produce.
     <br><br>
     A particularly nice feature of abilities is that they can hold two
-    spells: One for short range- and one for long range use.
+    spells: One for short range - and one for long range use.
     \n\n
     You should know that spellcasting monsters receive abilities via
-    &lt;treasurelist&gt;. ]]>
+    &lt;treasurelist&gt;.]]>
   </description>
   <use><![CDATA[
     If you want to create "customized" spellcasting monsters, you
@@ -805,7 +805,7 @@
     to get better resistance. You can turn off the magic part to
     make the spells more dangerous. However, this really shouldn't
     be neccessary unless you work on very high level maps.
-    And what fun is a magic resistance cloak when it has no effect? ]]>
+    And what fun is a magic resistance cloak when it has no effect?]]>
   </use>
   <attribute arch="invisible" value="1" type="fixed" />
   <attribute arch="no_drop" value="1" type="fixed" />
@@ -852,7 +852,7 @@
     When a player puts a defined number of certain items on the altar,
     then either a spell is casted (on the player) or a connector is
     triggered. If the latter is the case, the altar works only once.
-    Either way, the sacrificed item disappears. ]]>
+    Either way, the sacrificed item disappears.]]>
   </description>
   <attribute arch="no_pick" value="1" type="fixed" />
   &move_on;
@@ -897,7 +897,7 @@
   <description><![CDATA[
     Altar_triggers work pretty much like normal altars
     (drop sacrifice -> connection activated), except for the fact that
-    they reset after usage. Hence, altar_triggers can be used infinitely. ]]>
+    they reset after usage. Hence, altar_triggers can be used infinitely.]]>
   </description>
   <use><![CDATA[
     Altar_triggers are very useful if you want to charge a price for...
@@ -908,7 +908,7 @@
     </UL>
     The big advantage over normal altars is the infinite usability
     of altar_triggers! If there are ten players on one server, they're
-    quite grateful if things work more than once. =) ]]>
+    quite grateful if things work more than once. =)]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="slaying" editor="match item name" type="string">
@@ -965,12 +965,12 @@
 <type number="74" name="Skill Tool">
   <description><![CDATA[
     Wearing a skill tool will give the player the ability to use a skill.
-  ]]>
+ ]]>
   </description>
   <use><![CDATA[
     Feel free to assign resistancies and stats to a skill tools or change
     the skill that is given.
-  ]]>
+ ]]>
   </use>
   <attribute arch="skill" editor="skill name" type="string">
   This field describes which skill the player will be able to use wearing this item.
@@ -981,11 +981,11 @@
 <type number="39" name="Amulet">
   <description><![CDATA[
     Wearing an amulet, the object's stats will directly be inherited to
-    the player. Amulets are usually meant for protection and defense. ]]>
+    the player. Amulets are usually meant for protection and defense.]]>
   </description>
   <use><![CDATA[
     Feel free to create your own special artifacts. However, it is very
-    important that you keep your artifact in balance with existing maps. ]]>
+    important that you keep your artifact in balance with existing maps.]]>
   </use>
   <attribute arch="ac" editor="armour class" type="int">
     This value defines the amount of armour-class bonus for wearing
@@ -1140,7 +1140,7 @@
     while on battleground. Acid, draining and depletion effects don't
     work either.
     When a player dies on battleground, he gets teleported to an exit
-    location which is defined in the battleground object. ]]>
+    location which is defined in the battleground object.]]>
   </description>
   <use><![CDATA[
     Battleground is only meant for player vs. player duels. You can
@@ -1152,7 +1152,7 @@
     (Battleground will cease to work when the image or name is changed,
     or when it is placed beneath another floor tile.
     This is not a bug, it is there to prevent any attempts of placing
-    "hidden" battleground tiles anywhere.) ]]>
+    "hidden" battleground tiles anywhere.)]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="is_floor" value="1" type="fixed" />
@@ -1177,14 +1177,14 @@
     It blocks all magic and prayers, usage of alchemy, prevents potions
     from being used and blocks bombs from exploding. Note that altars that
     do cast spells still work.
-  ]]>
+ ]]>
   </description>
   <use><![CDATA[
     Safe ground can be used to prevents any means of burning
     or destroying the items in a shop. Put this object below all floor tiles
     in your map and your shop will be safe. It's generally useful for making
     areas where really no kind of spell should be invoked by a player.
-  ]]>
+ ]]>
   </use>
   &movement_types_terrain;
   <attribute arch="no_pick" value="1" type="fixed" />
@@ -1193,7 +1193,7 @@
 <!--####################################################################-->
 <type number="8" name="Book">
   <description><![CDATA[
-    Applying a book, the containing message is displayed to the player. ]]>
+    Applying a book, the containing message is displayed to the player.]]>
   </description>
   <attribute arch="level" editor="literacy level" type="int">
     If this value is set to be greater than zero, the player needs a
@@ -1227,11 +1227,11 @@
   <description><![CDATA[
     Wearing boots, the object's stats will directly be inherited to
     the player. Usually enhancing his speed, or granting some minor
-    protection bonus. ]]>
+    protection bonus.]]>
   </description>
   <use><![CDATA[
     Feel free to create your own special artifacts. However, it is very
-    important that you keep your artifact in balance with existing maps. ]]>
+    important that you keep your artifact in balance with existing maps.]]>
   </use>
   <attribute arch="exp" editor="speed bonus" type="int">
     Boots with &lt;speed bonus&gt; will increase the player's walking speed
@@ -1257,11 +1257,11 @@
   <description><![CDATA[
     Bracers are armour-plates worn around the wrists.
     Wearing bracer, the object's stats will directly be inherited to
-    the player. Usually enhancing his defense. ]]>
+    the player. Usually enhancing his defense.]]>
   </description>
   <use><![CDATA[
     Feel free to create your own special artifacts. However, it is very
-    important that you keep your artifact in balance with existing maps. ]]>
+    important that you keep your artifact in balance with existing maps.]]>
   </use>
   <attribute arch="magic" editor="magic bonus" type="int">
     &lt;magic bonus&gt; works just like ac, except that it can be improved by
@@ -1275,11 +1275,11 @@
   <import_type name="Amulet" />
   <description><![CDATA[
     Wearing an armour, the object's stats will directly be inherited to
-    the player. Usually enhancing his defense. ]]>
+    the player. Usually enhancing his defense.]]>
   </description>
   <use><![CDATA[
     Feel free to create your own special artifacts. However, it is very
-    important that you keep your artifact in balance with existing maps. ]]>
+    important that you keep your artifact in balance with existing maps.]]>
   </use>
   <attribute arch="last_heal" editor="spellpoint penalty" type="int">
     This poses a penalty to spell regeneration speed, for wearing the armour.
@@ -1305,7 +1305,7 @@
     When a predefined amount of weigh is placed on a button, the
     &lt;connection&gt; value is triggered. In most cases this happens when a
     player or monster steps on it. When the button is "released", the
-    &lt;connection&gt; value get's triggered a second time. ]]>
+    &lt;connection&gt; value get's triggered a second time.]]>
   </description>
   &move_on;
   &move_off;
@@ -1333,7 +1333,7 @@
   <description><![CDATA[
     Handle buttons are buttons which reset after a short period
     of time. Every time it is either applied or reset, the
-    &lt;connection&gt; value is triggered. ]]>
+    &lt;connection&gt; value is triggered.]]>
   </description>
 </type>
 
@@ -1343,7 +1343,7 @@
     <ignore_list name="non_pickable" />
   </ignore>
   <description><![CDATA[
-    Class changer are used while creating a character. ]]>
+    Class changer are used while creating a character.]]>
   </description>
   <attribute arch="randomitems" editor="class items" type="treasurelist">
     This entry determines which initial items the character receives.
@@ -1386,11 +1386,11 @@
   <description><![CDATA[
     Wearing a cloak, the object's stats will directly be inherited to
     the player. Cloaks usually add minor &lt;armour class&gt; and
-    sometimes a bit of resistance. ]]>
+    sometimes a bit of resistance.]]>
   </description>
   <use><![CDATA[
     Feel free to create your own special artifacts. However, it is very
-    important that you keep your artifact in balance with existing maps. ]]>
+    important that you keep your artifact in balance with existing maps.]]>
   </use>
   <attribute arch="magic" editor="magic bonus" type="int">
     &lt;magic bonus&gt; works just like ac, except that it can be improved by
@@ -1405,7 +1405,7 @@
 <!--####################################################################-->
 <type number="9" name="Clock">
   <description><![CDATA[
-    Applying a clock, the time is displayed to the player. ]]>
+    Applying a clock, the time is displayed to the player.]]>
   </description>
   <attribute arch_begin="msg" arch_end="endmsg" editor="description" type="text">
     This text may describe the item
@@ -1420,7 +1420,7 @@
     container, depending on the settings.
     <br><br>
     A special feature of containers is the "cauldron",
-    capable of mixing alchemical receipes. ]]>
+    capable of mixing alchemical receipes.]]>
   </description>
   <use><![CDATA[
     Note on chests - There are two types of chests:
@@ -1430,7 +1430,7 @@
          applied. Archetype name is "chest".
     <LI> Second there are the permanent chests - Those are containers,
          they can be opened and closed again. Archetype name is "chest_2".
-    </UL> ]]>
+    </UL>]]>
   </use>
   <attribute arch="race" editor="container class" type="string">
     If set, the container will hold only certain types of objects.
@@ -1495,7 +1495,7 @@
   <description><![CDATA[
     Converters are like "exchange tables". When the player drops a
     specific type of items, they get converted into other items, at a
-    predefined exchange-ratio. ]]>
+    predefined exchange-ratio.]]>
   </description>
   <use><![CDATA[
     Converters are better than shopping with doormats, because the
@@ -1507,7 +1507,7 @@
     items on a converter, the stuff you get must be of equal or lesser
     value than before! (Except if you are using "rare" items like
     dragonscales for payment). The code will not check if your ratio is
-    sane, so the player could gain infinite wealth by using your converter. ]]>
+    sane, so the player could gain infinite wealth by using your converter.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="slaying" editor="cost arch" type="string">
@@ -1544,11 +1544,11 @@
     A creator is an object which creates another object when it
     is triggered. The child object can be anything. Creators are
     VERY useful for all kinds of map-mechanisms. They can even
-    periodically create things. ]]>
+    periodically create things.]]>
   </description>
   <use><![CDATA[
     Don't hesitate to hide your creators under the floor.
-    The created items will still always appear ontop of the floor. ]]>
+    The created items will still always appear ontop of the floor.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="other_arch" editor="create arch" type="string">
@@ -1600,13 +1600,13 @@
     What is "unique" about them, compared to inv. checkers/ pedestals?
     - First, detectors check their square for a match periodically, not
     instantly. Second, detectors check directly for object names. Third,
-    detectors do not check the inventory of players/monsters. ]]>
+    detectors do not check the inventory of players/monsters.]]>
   </description>
   <use><![CDATA[
     There is one major speciality about detectors: You can detect spells
     blown over a detector! To detect a lighting bolt for example, set
     "slaying ligthing" and "speed 1.0". In combination with spellcasting
-    walls, this can be very useful for map-mechanisms. ]]>
+    walls, this can be very useful for map-mechanisms.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="slaying" editor="match name" type="string">
@@ -1641,7 +1641,7 @@
     that fly past. Unlike spinners, directors always move objects in the
     same direction. It does not make a difference from what angle you
     shoot into it.<br>
-    Directors are visible per default. ]]>
+    Directors are visible per default.]]>
   </description>
   <use><![CDATA[
     Directors are rarely used in maps. Sometimes they are placed to
@@ -1653,7 +1653,7 @@
     server by eating memory- and CPU-time.
     <br><br>
     You'd better not place directors in monster vs. player combat
-    areas too much, because that freaks out wizard-type players. ]]>
+    areas too much, because that freaks out wizard-type players.]]>
   </use>
   <attribute arch="sp" editor="direction" type="list_direction">
     Projectiles will leave the director flying in the selected &lt;direction&gt;.
@@ -1672,14 +1672,14 @@
     Diseases are an intersting form of spellcraft in Deliantra.
     Once casted, they can spread out and infect creatures in a large
     area. Being infected can have various effects, from amusing farts
-    to horrible damage - almost everything is possible. ]]>
+    to horrible damage - almost everything is possible.]]>
   </description>
   <use><![CDATA[
     Diseases are extremely flexible and usable in a many ways.
     So far they are mostly used for causing bad, unwanted effects.
     You could just as well create a disease which helps the player
     (recharging mana for example).
-    Infection with a "positive disease" could even be a quest reward. ]]>
+    Infection with a "positive disease" could even be a quest reward.]]>
   </use>
   <attribute arch="invisible" value="1" type="fixed" />
   <attribute arch="level" editor="plaque level" type="int">
@@ -1834,7 +1834,7 @@
     A door can be opened with a normal key. It also can be broken by attacking
     it, and it can be defeated with the lockpicking skill. If a door is
     defeated, horizontally and vertically adjacent doors are automatically
-    removed. ]]>
+    removed.]]>
   </description>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="alive" value="1" type="fixed" />
@@ -1871,7 +1871,7 @@
     The duplicator has one arch name specified as &lt;target arch&gt;,
     and only objects of this archetype can be affected.<br>
     It will multiply the number of items in the pile, by the &lt;multiply factor&gt;.
-    If the latter is set to zero, it will destroy objects. ]]>
+    If the latter is set to zero, it will destroy objects.]]>
   </description>
   <use><![CDATA[
     I hope it is clear that one must be very cautious when inserting a duplicator
@@ -1881,7 +1881,7 @@
     coins, gold and jewels. Besides, it is very important that the chance to
     loose the input matches the chance to earn winnings.<br>
     A duplicator with &lt;multiply factor&gt; 3 for example should have a
-    loosing rate of 2/3 = 67%. ]]>
+    loosing rate of 2/3 = 67%.]]>
   </use>
   <attribute arch="other_arch" editor="target arch" type="string">
     Only objects of matching archtype, lying ontop of the duplicator will be
@@ -1909,7 +1909,7 @@
     When the player applies an exit, he is transferred to a different location.
     (Monsters cannot use exits.) Depending on how it is set, the player applies
     the exit just by walking into it, or by pressing &lt;a&gt;pply when standing on
-    the exit.  ]]>
+    the exit. ]]>
   </description>
   <use><![CDATA[
     If you want to have an invisible exit, set &lt;invisible&gt; (, of course
@@ -1917,7 +1917,7 @@
     detected with the show_invisible spell.
     <br><br>
     You can be quite creative with the outlook of secret exits (their "face").
-    Don't forget to give the player relyable hints about them though. ]]>
+    Don't forget to give the player relyable hints about them though.]]>
   </use>
   <attribute arch="slaying" editor="exit path" type="string">
     The exit path defines the map that the player is transferred to.
@@ -1969,7 +1969,7 @@
     flesh has resistances set, a dragon player has a chance to gain resistance in
     those categories. The only constraint to this process is the &lt;flesh level&gt;.
     Don't forget that flesh items with resistances have to be balanced
-    according to map/monster difficulty. ]]>
+    according to map/monster difficulty.]]>
   </description>
   <use><![CDATA[
     For dragon players, flesh items can be highly valuable. Note that many
@@ -1981,7 +1981,7 @@
     Generally adding special flesh-treaties for dragon players is a great thing
     to do. Always consider that dragon players might really not be interested
     in that special piece of weapon or armour, so don't let the dragon-fellows miss
-    out on the reward completely. ]]>
+    out on the reward completely.]]>
   </use>
   <attribute arch="food" editor="foodpoints" type="int">
     The player's stomache will get filled with this amount of foodpoints.
@@ -2015,7 +2015,7 @@
   </ignore>
   <description><![CDATA[
     Floor is a very basic thing whithout too much
-    functionality. It's a floor - you stand on it. ]]>
+    functionality. It's a floor - you stand on it.]]>
   </description>
   <attribute arch="is_floor" value="1" type="fixed" />
   <attribute arch="no_pick" value="1" type="fixed" />
@@ -2059,7 +2059,7 @@
     That is kind of a relict from former code: When walking over
     encounter-floor, players sometimes got beamed to little maps
     with monsters on them. Nowadays this feature is disabled -
-    Hence encounter floor is not different from normal floor. ]]>
+    Hence encounter floor is not different from normal floor.]]>
   </description>
   <attribute arch="is_floor" value="1" type="fixed" />
   <attribute arch="no_pick" value="1" type="fixed" />
@@ -2096,7 +2096,7 @@
 <type number="6" name="Food">
   <description><![CDATA[
     By eating/drinking food-objects, the player can fill his
-    stomache and gain a little health. ]]>
+    stomache and gain a little health.]]>
   </description>
   <attribute arch="food" editor="foodpoints" type="int">
     The player's stomache will get filled with this amount of foodpoints.
@@ -2118,12 +2118,12 @@
     by activating a button/trigger, by speaking passwords (-> magic_ear)
     or carrying special key-objects (-> inventory checker).
     Unlike locked doors, gates can get shut again after a player has
-    passed, which makes them more practical in many cases. ]]>
+    passed, which makes them more practical in many cases.]]>
   </description>
   <use><![CDATA[
     Use gates to divide your maps into seperated areas. After solving
     area A, the player gains access to area B, and so on. Make your
-    maps more complex than "one-way". ]]>
+    maps more complex than "one-way".]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="speed" value="1" type="float">
@@ -2157,11 +2157,11 @@
   <description><![CDATA[
     Wearing a girdle, the object's stats will directly be inherited to
     the player. Girdles usually provide stats- or damage bonuses and no
-    defense. ]]>
+    defense.]]>
   </description>
   <use><![CDATA[
     Feel free to create your own special artifacts. However, it is very
-    important that you keep your artifact in balance with existing maps. ]]>
+    important that you keep your artifact in balance with existing maps.]]>
   </use>
   <attribute arch="magic" editor="magic bonus" type="int">
     &lt;magic bonus&gt; works just like ac, except that it can be improved by
@@ -2179,11 +2179,11 @@
   <import_type name="Amulet" />
   <description><![CDATA[
     Wearing gloves, the object's stats will directly be inherited to
-    the player. Gloves can add defense or damage bonuses. ]]>
+    the player. Gloves can add defense or damage bonuses.]]>
   </description>
   <use><![CDATA[
     Feel free to create your own special artifacts. However, it is very
-    important that you keep your artifact in balance with existing maps. ]]>
+    important that you keep your artifact in balance with existing maps.]]>
   </use>
   <attribute arch="magic" editor="magic bonus" type="int">
     If the gloves provide &lt;armour class&gt;, &lt;magic bonus&gt; will increase it.
@@ -2199,13 +2199,13 @@
   </ignore>
   <description><![CDATA[
     A handle can be applied by players and (certain) monsters.
-    Every time it is applied, the &lt;connection&gt; value is triggered. ]]>
+    Every time it is applied, the &lt;connection&gt; value is triggered.]]>
   </description>
   <use><![CDATA[
     Handles are commonly used to move gates. When placing your lever,
     don't forget that some monsters are able to apply it.
     The ability to apply levers is rare among monsters -
-    but vampires can do it for example. ]]>
+    but vampires can do it for example.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="connected" editor="connection" type="int">
@@ -2227,12 +2227,12 @@
   <description><![CDATA[
     Handle triggers are handles which reset after a short period
     of time. Every time it is either applied or reset, the
-    &lt;connection&gt; value is triggered. ]]>
+    &lt;connection&gt; value is triggered.]]>
   </description>
   <use><![CDATA[
     When you connect an ordinary handle to a gate, the gate normally remains
     opened after the first player passed. If you want to keep the gate shut,
-    connecting it to a handle trigger is an easy solution.  ]]>
+    connecting it to a handle trigger is an easy solution. ]]>
   </use>
 </type>
 
@@ -2247,14 +2247,14 @@
   <description><![CDATA[
     The best example for Hazard Floor is lava. It works like standard
     floor, but damages all creatures standing on it.
-    Damage is taken in regular time intervals. ]]>
+    Damage is taken in regular time intervals.]]>
   </description>
   <use><![CDATA[
     The default lava for example does minor damage. But you can turn
     it up so that your hazard floor poses a real threat.<br>
     Like magic walls, such floors add a permanent thrill to your map.
     You can use that to safely chase off too-weak players, or just
-    to have something different. ]]>
+    to have something different.]]>
   </use>
   <attribute arch="is_floor" value="1" type="fixed" />
   <attribute arch="lifesave" value="1" type="fixed" />
@@ -2315,11 +2315,11 @@
     Wearing a helmet, the object's stats will directly be inherited to
     the player. Normal helmets usually increase defense, while crowns
     add more special bonuses like stats/resistances paired with
-    low defense. ]]>
+    low defense.]]>
   </description>
   <use><![CDATA[
     Feel free to create your own special artifacts. However, it is very
-    important that you keep your artifact in balance with existing maps. ]]>
+    important that you keep your artifact in balance with existing maps.]]>
   </use>
   <attribute arch="magic" editor="magic bonus" type="int">
     &lt;magic bonus&gt; works just like ac, except that it can be improved by
@@ -2340,7 +2340,7 @@
   <description><![CDATA[
     Holy_altars are altars for the various religions. Praying
     at a Holy_altar will make you a follower of that god, and
-    if you already follow that god, you may get some extra bonus. ]]>
+    if you already follow that god, you may get some extra bonus.]]>
   </description>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="other_arch" editor="god name" type="string">
@@ -2373,12 +2373,12 @@
     <br><br>
     A horn contains a spell. The player can use this spell by applying and
     "fireing" (blowing) the horn. Unlike wands/scrolls, horns can be
-    used endlessly. ]]>
+    used endlessly.]]>
   </description>
   <use><![CDATA[
     Horns are powerful due to their fast recharge rate. They should
     never contain high level attacking spells. Even curing/healing spells
-    are almost too good on a horn. ]]>
+    are almost too good on a horn.]]>
   </use>
   <attribute arch="sp" editor="spell" type="spell">
     Sets the &lt;spell&gt; of the horn. Consider twice before handing out any
@@ -2414,7 +2414,7 @@
   <description><![CDATA[
     Inorganic materials are generally used as ingredients for
     alchemical receipes. By themselves, they have no special
-    functionalities. ]]>
+    functionalities.]]>
   </description>
   <attribute arch="is_dust" editor="is dust" type="bool">
   </attribute>
@@ -2437,7 +2437,7 @@
     that do/don't carry the matching object.
     <br><br>
     As you can see, inv. checkers are quite powerful, holding a
-    great variety of possibilities. ]]>
+    great variety of possibilities.]]>
   </description>
   <use><![CDATA[
     Putting a check_inventory space in front of a gate (one below) and
@@ -2445,7 +2445,7 @@
     Unlike the key/door-combo, this one works infinite since it is
     independant from map reset. Use it to put a "structure" into your
     maps: Player must solve area A to gain access to area B. This concept
-    can be found in nearly every RPG - simple but effective. ]]>
+    can be found in nearly every RPG - simple but effective.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="slaying" editor="match key string" type="string">
@@ -2531,7 +2531,7 @@
   <description><![CDATA[
     Items of the type Gold &amp; Jewels are handled like a currency.
     Unlike for any other type of item, in shops, the buy- and selling
-    prices differ only marginally. ]]>
+    prices differ only marginally.]]>
   </description>
   <attribute arch="race" value="gold and jewels" type="fixed" />
   <attribute arch_begin="msg" arch_end="endmsg" editor="description" type="text">
@@ -2543,7 +2543,7 @@
 <type number="24" name="Key">
   <description><![CDATA[
     When carrying a key, a normal door can be opened. The key will
-    disappear. ]]>
+    disappear.]]>
   </description>
   <attribute arch="startequip" editor="godgiven item" type="bool">
     A godgiven item vanishes as soon as the player
@@ -2558,7 +2558,7 @@
   </ignore>
   <description><![CDATA[
     A locked door can be opened only when carrying
-    the appropriate special key. ]]>
+    the appropriate special key.]]>
   </description>
   <use><![CDATA[
     If you want to create a locked door that cannot be opened (no key),
@@ -2570,7 +2570,7 @@
     "magic force". A good example is the map "Lake_Country/ebony/masterlev".
     There you have magic forces (door objects) put under certain artifact
     items. To get your hands on the artifacts, you need to bring up the
-    appropriate quest items (key objects). ]]>
+    appropriate quest items (key objects).]]>
   </use>
   <attribute arch="move_type" value="0" type="fixed" />
   <attribute arch="no_pick" value="1" type="fixed" />
@@ -2607,7 +2607,7 @@
   </ignore>
   <description><![CDATA[
     Magic_ears trigger a connected value
-    when the player speaks a specific keyword. ]]>
+    when the player speaks a specific keyword.]]>
   </description>
   <use><![CDATA[
     Whenever you put magic_ears on your maps, make sure there are
@@ -2619,7 +2619,7 @@
     can create the impression that the NPC actually *does* something
     according to his conversation with a player. Mostly this means
     opening a gate or handing out some item, but you could be quite
-    creative here. ]]>
+    creative here.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="connected" editor="connection" type="int">
@@ -2651,7 +2651,7 @@
     the spell you want to use with a wall.
     <br><br>
     Several types of magical walls are predefined for you in the
-    archetypes, and can be found on the "connected" Pickmap. ]]>
+    archetypes, and can be found on the "connected" Pickmap.]]>
   </description>
   <use><![CDATA[
     Spellcasting walls pose an interesting alternative to monsters.
@@ -2672,7 +2672,7 @@
     It is possible to make walls rotate when triggered. But that is so
     confusing (and useless IMHO) that I did not mention it above. You
     can find a working example on the map
-    "/pup_land/castle_eureca/castle_eureca8". ]]>
+    "/pup_land/castle_eureca/castle_eureca8".]]>
   </use>
   <attribute arch="dam" editor="spell" type="spell">
     The magic wall will cast this &lt;spell&gt;.
@@ -2737,7 +2737,7 @@
     checkers. It is also possible to use markers for removing marks again.
     <br><br>
     Note that the player has no possibility to "see" his own marks,
-    except by the effect that they cause on the maps. ]]>
+    except by the effect that they cause on the maps.]]>
   </description>
   <use><![CDATA[
     Markers hold real cool possibilities for map-making. I encourage
@@ -2748,7 +2748,7 @@
     <br><br>
     Please avoid infinite markers when they aren't needed. They're
     using a little space in the player file after all, so if there
-    is no real purpose, set an expire time. ]]>
+    is no real purpose, set an expire time.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="slaying" editor="key string" type="string">
@@ -2804,7 +2804,7 @@
     subtracted from the player's money.
     <br><br>
     For money, always use the default arches.
-    Don't modify them. ]]>
+    Don't modify them.]]>
   </description>
   <attribute arch="race" value="gold and jewels" type="fixed" />
 </type>
@@ -2829,7 +2829,7 @@
     helping the player - maybe joining him as pet.
     The unagressive creatures who communicate with players are
     usually called "NPCs" (Non Player Character), a well-known
-    term in role-play environments. ]]>
+    term in role-play environments.]]>
   </description>
   <use><![CDATA[
     Monsters play a central role in most maps. Choosing the right
@@ -2864,7 +2864,7 @@
     I know it's impossible to make the perfectly balanced map. There's always
     some part which is found too easy or too hard for a certain kind of player.
     Just give it your best shot. And listen to feedback from players if you
-    receive some. :-) ]]>
+    receive some. :-)]]>
   </use>
   <attribute arch="alive" value="1" type="fixed" />
   <attribute arch="randomitems" editor="treasurelist" type="treasurelist">
@@ -3203,7 +3203,7 @@
     As the name implies, mood floors can change the "mood" of
     a monsters/NPC. For example, an unagressive monster could be
     turned mad to start attacking. Similar, an agressive monster
-    could be calmed. ]]>
+    could be calmed.]]>
   </description>
   <use><![CDATA[
     Mood floors are absolutely cool for NPC interaction. To make an
@@ -3217,7 +3217,7 @@
     <br><br>
     (Of course you must always give clear hints about keywords!
     And there is no reason why you couldn't use a button/lever/pedestal
-    etc. instead of a magic_ear.) ]]>
+    etc. instead of a magic_ear.)]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="last_sp" editor="mood" type="list_mood">
@@ -3271,7 +3271,7 @@
     move along a chain of them.
     <br><br>
     Multisquare monsters can be moved as well, given
-    enough space. Movers are usually invisible. ]]>
+    enough space. Movers are usually invisible.]]>
   </description>
   <use><![CDATA[
     NEVER EVER consider a mover being unpassable in the backwards
@@ -3288,7 +3288,7 @@
     Note that Movers and Directors are seperate objects, even though
     they look and act similar. Directors only do spells/missiles,
     while movers only do living creatures (depending on how it
-    is set: monsters and players). ]]>
+    is set: monsters and players).]]>
   </use>
   <attribute arch="attacktype" editor="forced movement" type="bool">
     If forced movement is enabled, the mover "freezes" anyone it
@@ -3350,7 +3350,7 @@
   <description><![CDATA[
     Pedestals are designed to detect certain types of living objects.
     When a predefined type of living creature steps on the pedestal, the
-    connected value is triggered. ]]>
+    connected value is triggered.]]>
   </description>
   <use><![CDATA[
     If you want to create a place where only players of a certain race
@@ -3358,7 +3358,7 @@
     only activated for players of the matching race. Do not use gates,
     because many other players could sneak in. If you put powerful
     artifacts into such places, generally set "startequip 1", so that
-    they are preserved for that one race and can't be traded to others. ]]>
+    they are preserved for that one race and can't be traded to others.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="slaying" editor="match race" type="string">
@@ -3386,19 +3386,22 @@
   <description><![CDATA[
     Pits are holes, transporting the player when he walks (and falls) into them.
     A speciality about pits is that they don't transport the player to
-    the exact destination, but within a two-square radius of the destination
+    the exact destination, but within a configurable radius of the destination
     (never on blocked squares).<br>
     Optionally, pits can get closed and opened, similar to gates.<br><br>
     Monsters and items are affected by pits just as well as players.
-    Even multipart monsters can fall through them, given enough space. ]]>
+    Even multipart monsters can fall through them, given enough space.]]>
   </description>
   <use><![CDATA[
     Pits can add interesting effects to your map. When using them, make
     sure to use them in a "logical way": Pits should always drop the
     player to some kind of lower level. They should not be used to
-    randomly interconnect maps like teleporters do. ]]>
+    randomly interconnect maps like teleporters do.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
+  <attribute arch="range" editor="spread radius" type="int">
+    The radius of the square area that the pit will randomly put the player into (0 to 3, default 1).
+  </attribute>
   <attribute arch="connected" editor="connection" type="int">
     When a &lt;connection&gt; value is set, the pit can be opened/closed
     by activating the connection.
@@ -3429,7 +3432,7 @@
 <type number="7" name="Poison Food">
   <description><![CDATA[
     When eating, the player's stomache is drained by 1/4 of food.
-    If his food drops to zero, the player might even die. ]]>
+    If his food drops to zero, the player might even die.]]>
   </description>
 </type>
 
@@ -3437,10 +3440,10 @@
 <type number="5" name="Potion">
   <description><![CDATA[
     The player can drink these and gain various kinds of benefits
-    (/penalties) by doing so. ]]>
+    (/penalties) by doing so.]]>
   </description>
   <use><![CDATA[
-    One potion should never give multiple benefits at once. ]]>
+    One potion should never give multiple benefits at once.]]>
   </use>
   <attribute arch="level" editor="potion level" type="int">
     If the potion contains a spell, the spell is cast at this level.
@@ -3477,7 +3480,7 @@
     Power crystals can store a player's mana:
     When the player applies the crystal with full mana, half of
     it flows into the crystal. When the player applies it with
-    lacking mana, the crystal replenishes the player's mana. ]]>
+    lacking mana, the crystal replenishes the player's mana.]]>
   </description>
   <attribute arch="sp" editor="initial mana" type="int">
     &lt;initial mana&gt; is the amount of spellpoints that the
@@ -3499,7 +3502,7 @@
     <br><br>
     It's very easy to add new pairs of weapons &amp; projectiles.
     Just set matching &lt;ammunition class&gt; both for shooting
-    weapon and projectile. ]]>
+    weapon and projectile.]]>
   </description>
   <use><![CDATA[
     If you want to create new kinds of projectiles, you could
@@ -3507,7 +3510,7 @@
 
     Don't create new pairs of weapons &amp; projectiles unless
     they really fullfill a useful purpose. In fact, even bows
-    and crossbows are rarely ever used. ]]>
+    and crossbows are rarely ever used.]]>
   </use>
   <attribute arch="attacktype" editor="attacktype" type="bitmask_attacktype">
     This number is a bitmask, specifying the projectile's attacktypes.
@@ -3579,7 +3582,7 @@
   <description><![CDATA[
     Rings are worn on the hands - one ring each.
     Wearing rings, the object's stats will directly be inherited to
-    the player. Usually enhancing his spellcasting potential. ]]>
+    the player. Usually enhancing his spellcasting potential.]]>
   </description>
   <use><![CDATA[
     When you create an artifact ring, never forget that players can
@@ -3588,7 +3591,7 @@
     <br><br>
     Also keep in mind that rings are generally the wizard's tools.
     They should primarily grant bonuses to spellcasting abilities
-    and non-physical resistances. ]]>
+    and non-physical resistances.]]>
   </use>
 </type>
 
@@ -3601,12 +3604,12 @@
     A rod contains a spell. The player can use this spell by applying and
     fireing the rod. Rods need time to regenerate their "internal" spellpoints,
     lowering the effectiveness in combat. But unlike wands/scrolls, rods can be
-    used endlessly. ]]>
+    used endlessly.]]>
   </description>
   <use><![CDATA[
     Rods with healing/curing spells are extremely powerful. Usually, potions have
     to be used for that purpose. Though, potions are expensive and only good for
-    one-time-use.<br> ]]>
+    one-time-use.<br>]]>
   </use>
   <attribute arch="sp" editor="spell" type="spell">
     Sets the &lt;spell&gt; of the rod. Consider twice before handing out special
@@ -3656,11 +3659,11 @@
     and will cast this spell when it detonates. Yet another kind is the
     "summoning rune", summoning predefined monsters of any kind, at detonation.
     <br><br>
-    Many runes are already defined in the archetypes. ]]>
+    Many runes are already defined in the archetypes.]]>
   </description>
   <use><![CDATA[
     Avoid monsters stepping on your runes. For example, summoning runes
-    together with spellcasting- and  attack-runes is usually a bad idea. ]]>
+    together with spellcasting- and  attack-runes is usually a bad idea.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   &move_on;
@@ -3738,7 +3741,7 @@
   <description><![CDATA[
     When the player applies a savebed, he is not only saved. Both his
     respawn-after-death and his word-of-recall positions are pointing
-    to the last-applied savebed. ]]>
+    to the last-applied savebed.]]>
   </description>
   <use><![CDATA[
     Put savebed locations in towns, do not put them into dungeons.
@@ -3752,7 +3755,7 @@
     <LI> If possible, mark the whole site as no-spell area (Insert this
          arch called "dungeon_magic" everywhere). This is not required,
          but it makes the place much more safe.
-    </UL> ]]>
+    </UL>]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="no_magic" value="1" type="fixed" />
@@ -3769,12 +3772,12 @@
     scrolls require a certain literacy skill to read successfully.
     Accordingly, for a successful reading, a small amount of
     experience is gained. Scrolls allow only one time usage, but
-    usually they are sold in bulks. ]]>
+    usually they are sold in bulks.]]>
   </description>
   <use><![CDATA[
     For low level quests, scrolls of healing/curing-spells
     can be a nice reward. At higher levels, scrolls become less
-    and less useful. ]]>
+    and less useful.]]>
   </use>
   <attribute arch="level" editor="casting level" type="int">
     The spell of the scroll will be casted at this level.
@@ -3796,11 +3799,11 @@
   <description><![CDATA[
     Wearing a shield, the object's stats will directly be inherited to
     the player. Shields usually provide good defense, only surpassed
-    by brestplate armour. Resistances on shields aren't uncommon either. ]]>
+    by brestplate armour. Resistances on shields aren't uncommon either.]]>
   </description>
   <use><![CDATA[
     Feel free to create your own special artifacts. However, it is very
-    important that you keep your artifact in balance with existing maps. ]]>
+    important that you keep your artifact in balance with existing maps.]]>
   </use>
   <attribute arch="magic" editor="magic bonus" type="int">
     &lt;magic bonus&gt; works just like ac, except that it can be improved by
@@ -3819,7 +3822,7 @@
     <br><br>
     It's very easy to add new pairs of weapons &amp; projectiles.
     Just set matching &lt;ammunition class&gt; both for shooting
-    weapon and projectile. ]]>
+    weapon and projectile.]]>
   </description>
   <use><![CDATA[
     Shooting weapons should not add bonuses in general. There's already
@@ -3827,7 +3830,7 @@
     Shooting weapons should especially not add bonuses to the player
     that have nothing to do with schooting. A Wisdom bonus on a bow
     is crap for example! A name like "Longbow of great Wisdom" doesn't help
-    - still crap. ]]>
+    - still crap.]]>
   </use>
   <attribute arch="race" editor="ammunition class" type="string">
     Only projectiles with matching &lt;ammunition class&gt; can be fired
@@ -3958,13 +3961,13 @@
     unpaid and the player receives payment according to the item's
     selling-value.
     Shopfloor always prevents magic (To hinder players from burning
-    or freezing the goods). ]]>
+    or freezing the goods).]]>
   </description>
   <use><![CDATA[
     Tile your whole shop-interior space which shop floor.
     (That assures players receive payment for dropping items).
     Place shop mats to enter/leave the shop, and make sure
-    there is no other exit than the shop mat. ]]>
+    there is no other exit than the shop mat.]]>
   </use>
   <attribute arch="is_floor" value="1" type="fixed" />
   <attribute arch="no_pick" value="1" type="fixed" />
@@ -4008,11 +4011,11 @@
     to the nearest other mat. If the player has unpaid items in his
     inventory, the price gets charged from his coins automatically.
     If the player has insufficient coins to buy his unpaid items, he
-    is unable to pass any shopmat (So he has to drop unpaid items). ]]>
+    is unable to pass any shopmat (So he has to drop unpaid items).]]>
   </description>
   <use><![CDATA[
     As stated above, always place TWO shop mats into your shop.
-    Not more and not less than that. ]]>
+    Not more and not less than that.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   &move_on;
@@ -4027,13 +4030,13 @@
     The purpose of a sign or magic_mouth is to display a certain message to
     the player. There are three ways to have the player get this message:
     The player walking onto it (-&gt; magic_mouth), the player pressing &lt;a&gt;pply
-    (-&gt; sign) or the player triggering a button/handle/etc (-&gt; magic_mouth). ]]>
+    (-&gt; sign) or the player triggering a button/handle/etc (-&gt; magic_mouth).]]>
   </description>
   <use><![CDATA[
     Use signs and magic_mouths, plenty of them! Place magic_mouths to add
     some true roleplay feeling to your maps, support your storyline or give
     hints about hidden secrets/dangers. Place signs to provide the player
-    with all kinds of useful information for getting along in your maps. ]]>
+    with all kinds of useful information for getting along in your maps.]]>
   </use>
   <attribute arch="connected" editor="connection" type="int">
     When a connection value is set, the message will be printed whenever
@@ -4084,7 +4087,7 @@
   <description><![CDATA[
     Skills are objects which exist in the player/monster inventory.
     Both NPC/monsters and players use the same skill archetypes. Not all skills
-    are enabled for monster use however. ]]>
+    are enabled for monster use however.]]>
   </description>
   <use><![CDATA[
     For mapmaking, Skill objects serve two purposes:
@@ -4099,7 +4102,7 @@
     copy default skill archtypes into the monsters' inventories.
     You can even customize the skills by changing stats. It is not
     recommended however, to use skills in your maps which are totally
-    unrelated to any predefined skill archtype.</p> ]]>
+    unrelated to any predefined skill archtype.</p>]]>
   </use>
   <attribute arch="invisible" value="1" type="fixed" />
   <attribute arch="no_drop" value="1" type="fixed" />
@@ -4138,13 +4141,13 @@
 <type number="130" name="Skill Scroll">
   <description><![CDATA[
     By reading a skill scroll, a player has a chance to learn the
-    contained skill. ]]>
+    contained skill.]]>
   </description>
   <use><![CDATA[
     Skill scrolls are very much sought for by players. Currently,
     all skill scrolls are sold in shops randomly, which is in fact not
     a good system. It would be nice to have some cool quests with
-    skill scrolls rewarded at the end. ]]>
+    skill scrolls rewarded at the end.]]>
   </use>
   <attribute arch="race" value="scrolls" type="fixed" />
   <attribute arch="skill" editor="skill name" type="string">
@@ -4164,7 +4167,7 @@
     <br><br>
     This object-type can also be used for "passport"-like items:
     When walking onto an invetory checker, a gate for example might
-    get opened. The "passport" will stay in the player's inventory. ]]>
+    get opened. The "passport" will stay in the player's inventory.]]>
   </description>
   <use><![CDATA[
     How to make a "passport": You take the special key arch
@@ -4175,7 +4178,7 @@
     Of course you can be creative with names and faces of
     key-objects. A "mysterious crystal" or a "big dragon claw"
     (with appropriate faces) appear more interesting than just
-    a "strange key", or "passport". ]]>
+    a "strange key", or "passport".]]>
   </use>
   <attribute arch="slaying" editor="key string" type="string">
     This string must be identical with the &lt;key string&gt; in the
@@ -4220,7 +4223,7 @@
     of the player, spells may gain power but also increase cost.<br>
     Monsters can use spells which are put in their inventory (provided
     that certain "enabling" settings are correct). The monster's
-    &lt;treasurelist&gt; can also be used to provide it with spells. ]]>
+    &lt;treasurelist&gt; can also be used to provide it with spells.]]>
   </description>
   <use><![CDATA[
     A lot of the spells' settings can be tuned and customized.
@@ -4228,7 +4231,7 @@
     important to think about balance. A single spell which is too
     powerful and/or too easy to use can eventually toss the whole skill
     and magic school system out of whack. Testing new spells is
-    quite important therefore. ]]>
+    quite important therefore.]]>
   </use>
   <attribute arch="no_drop" value="1" type="fixed" />
   <attribute arch="invisible" value="1" type="fixed" />
@@ -4270,7 +4273,7 @@
     spell object in the spellbooks inventory. Refer to the description
     of spell objects for detailed information how to customize spells.<br>
     If you want to have a random spellbook instead, choose a &lt;treasurelist&gt;
-    with a compilation of spells that the book may contain. ]]>
+    with a compilation of spells that the book may contain.]]>
   </description>
   <use><![CDATA[
     Don't put any of the godgiven spells into a spellbook! These are
@@ -4281,7 +4284,7 @@
     of varying schools (pyromancy, sorcery, evocation, summoning, and
     even praying). The difference lies only in the spells they contain.
     It is up to you, the mapmaker, to pick the right type of book
-    for your spells. ]]>
+    for your spells.]]>
   </use>
   <attribute arch="skill" value="literacy" type="fixed" />
   <attribute arch="randomitems" editor="treasurelist" type="treasurelist">
@@ -4310,7 +4313,7 @@
     Spinners change the direction of spell objects and other projectiles
     that fly past. Unlike directors, it does make a difference from what
     angle you shoot into the spinner. The direction of objects flying past
-    is always changed by a certain degree. ]]>
+    is always changed by a certain degree.]]>
   </description>
   <use><![CDATA[
     Spinners are very rarely used. I believe they are quite
@@ -4319,7 +4322,7 @@
     otherwise couldn't.
 
     When placing spinners on a map with magic walls, make sure the spell-
-    projectiles from magic walls don't get to fly in loops. ]]>
+    projectiles from magic walls don't get to fly in loops.]]>
   </use>
   <attribute arch="sp" editor="direction number" type="int">
     The spinner will change the direction of flying objects by
@@ -4342,7 +4345,7 @@
     he will start to sink in and eventually drown and die.
     Items dropped on the swamp sink in and dissapear.
     Players with knowledge of the woodsman skill are a lot less likely
-    to die in the swamp. ]]>
+    to die in the swamp.]]>
   </description>
   <attribute arch="is_floor" value="1" type="fixed" />
   <attribute arch="is_wooded" value="1" type="fixed" />
@@ -4376,7 +4379,7 @@
     Sometimes teleporters are activated even against the players will.
     <br><br>
     Unlike exits, teleporters can also transfer items and
-    monsters to different locations on the same map. ]]>
+    monsters to different locations on the same map.]]>
   </description>
   <use><![CDATA[
     When creating maps, I guess sooner or later you'll want to have
@@ -4387,7 +4390,7 @@
     Fortunately, there is a cool trick to make a perfectly invisible
     teleporter: You simply add teleporter functionality to the floor
     itself. That means: You take the floor arch (e.g. "flagstone"),
-    set "type 41", and add slaying/hp/sp/connected... everything you need. ]]>
+    set "type 41", and add slaying/hp/sp/connected... everything you need.]]>
   </use>
   <attribute arch="slaying" editor="exit path" type="string">
     The exit path specifies the map that the player is transferred to.
@@ -4469,7 +4472,7 @@
   <use><![CDATA[
     Use gates to divide your maps into separated areas. After solving
     area A, the player gains access to area B, and so on. Make your
-    maps more complex than "one-way". ]]>
+    maps more complex than "one-way".]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="connected" editor="connection" type="int">
@@ -4571,12 +4574,12 @@
     trapdoor determines weither it slams the trapdoor open and falls through
     or not.<br>
     Once a trapdoor has been opened (by a creature or items of sufficient
-    weight,) it remains open, acting like an opened pit. ]]>
+    weight,) it remains open, acting like an opened pit.]]>
   </description>
   <use><![CDATA[
     Trapdoors should be used in the same fashion as pits:
     They should always drop the victims to some kind of lower level. They
-    are not supposed to be used to randomly interconnect maps like teleporters. ]]>
+    are not supposed to be used to randomly interconnect maps like teleporters.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   &move_on;
@@ -4612,7 +4615,7 @@
   </ignore>
   <description><![CDATA[
     A treasure-object turns into certain randomitems when the map is loaded
-    into the game. ]]>
+    into the game.]]>
   </description>
   <use><![CDATA[
     About usage of the "random-artifact" treasurelist:
@@ -4622,7 +4625,7 @@
     number of different artifacts! Besides, players will always seek the place
     with the most easy-to-get random artifact and ignore all others.
     My advice: Don't use it! Attract players with good fighting experience
-    (from monsters), potions, spellbooks, money, and non-random artifacts.  ]]>
+    (from monsters), potions, spellbooks, money, and non-random artifacts. ]]>
   </use>
   <attribute arch="randomitems" editor="treasurelist" type="treasurelist">
     This entry determines what kind of treasure will appear. Look into
@@ -4663,7 +4666,7 @@
     checkers. It is also possible to use markers for removing marks again.
     <br><br>
     Note that the player has no possibility to "see" his own marks,
-    except by the effect that they cause on the maps. ]]>
+    except by the effect that they cause on the maps.]]>
   </description>
   <use><![CDATA[
     Markers hold real cool possibilities for map-making. I encourage
@@ -4674,7 +4677,7 @@
     <br><br>
     Please avoid infinite markers when they aren't needed. They're
     using a little space in the player file after all, so if there
-    is no real purpose, set an expire time. ]]>
+    is no real purpose, set an expire time.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="slaying" editor="key string" type="string">
@@ -4723,7 +4726,7 @@
     <attribute arch="unpaid" />
   </ignore>
   <description><![CDATA[
-    Walls usually block passage and sight. ]]>
+    Walls usually block passage and sight.]]>
   </description>
   &movement_types_terrain;
   <attribute arch="can_roll" editor="moveable" type="bool">
@@ -4746,7 +4749,7 @@
     Wands contain a certain spell. The player can apply (ready) and
     fire the wand. After a defined number of casts, the wand is
     "used up". It is possible to recharge a wand with scrolls of
-    charging, but usually that isn't worth the cost. ]]>
+    charging, but usually that isn't worth the cost.]]>
   </description>
   <use><![CDATA[
     Wands are quite seldomly used. The reason prolly is that they're
@@ -4755,7 +4758,7 @@
     the recharge ability.
     <br><br>
     For low levels, staffs of healing/cure and word of recall are
-    quite desirable though. Ideal rewards for low level quests. ]]>
+    quite desirable though. Ideal rewards for low level quests.]]>
   </use>
   <attribute arch="sp" editor="spell" type="spell">
     The &lt;spell&gt; specifies the contained spell.
@@ -4790,7 +4793,7 @@
   <description><![CDATA[
     A weak wall is a breakable spot amidsts a solid wall. Typically
     these weak walls look similar to their solid "relatives" except
-    for a small crack or little chunks of wall on the ground. ]]>
+    for a small crack or little chunks of wall on the ground.]]>
   </description>
   <use><![CDATA[
     If you want to create hidden rooms, using weak walls is alot
@@ -4799,7 +4802,7 @@
     them: Rising their defensive stats, weak walls can become a
     serious obstacle. An ice wall might only be torn down by a fire
     attack for example. A granite wall for instance might be very
-    hard to destroy. ]]>
+    hard to destroy.]]>
   </use>
   <attribute arch="alive" value="1" type="fixed" />
   <attribute arch="no_pick" value="1" type="fixed" />
@@ -4838,12 +4841,12 @@
   <description><![CDATA[
     Wielding a weapon, the object's stats will directly be inherited to the
     player. Usually enhancing his fighting-abilities. Non-magical weapons can
-    be improved with scrolls. ]]>
+    be improved with scrolls.]]>
   </description>
   <use><![CDATA[
     If you create artifacts (equipment) with stats- or resistance-bonus:
     Keep playbalance in mind! Such items mustn't be reachable without hard
-    fighting AND questing. ]]>
+    fighting AND questing.]]>
   </use>
   <attribute arch="attacktype" editor="attacktype" type="bitmask_attacktype">
     This number is a bitmask, specifying the weapon's attacktypes.
@@ -5027,7 +5030,7 @@
 <type number="116" name="Event Connector">
   <description><![CDATA[
     Event connectors link specific events that happen to objects to
-    a crossfire plug-in. They are not used at all in Deliantra ]]>
+    a crossfire plug-in. They are not used at all in Deliantra.]]>
   </description>
 </type>
 

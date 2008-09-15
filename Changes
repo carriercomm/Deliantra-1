@@ -1,5 +1,13 @@
 Changes for Deliantra perl extension
 
+1.222 Tue Sep 16 01:38:19 CEST 2008
+	- remove type 110 (formerly ability, now inscribable).
+
+1.221 Mon Sep  8 23:59:57 CEST 2008
+	- elmex loves to add files to Makefile.PL and leaving
+          them out of MANIFEST. he does it again, and again, and again,
+          no matter how often you have to clean up behind him and tell him.
+
 1.22 Fri Sep  5 17:27:34 CEST 2008
 	- add range field to pits.
         - correctly decode ex command text to unicode.

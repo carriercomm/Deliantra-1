@@ -14,6 +14,7 @@ bin/cfarch-normalize
 bin/cfmap-normalize
 bin/cfmap-plushify
 bin/cfmap-tagify
+bin/cfxmlrender
 res2pm
 res/README
 res/autojoin.txt

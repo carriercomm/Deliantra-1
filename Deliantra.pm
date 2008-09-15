@@ -6,7 +6,7 @@ Deliantra - Deliantra suppport module to read/write archetypes, maps etc.
 
 package Deliantra;
 
-our $VERSION = '1.22';
+our $VERSION = '1.222';
 
 use strict;
 

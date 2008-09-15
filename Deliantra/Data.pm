@@ -7889,7 +7889,6 @@ our %ATTR = (
   104 => $TYPE{Bracers},
   106 => $TYPE{Savebed},
   109 => $TYPE{'Wand & Staff'},
-  110 => $TYPE{Ability},
   111 => $TYPE{Scroll},
   112 => $TYPE{Director},
   113 => $TYPE{Girdle},
@@ -7903,7 +7902,8 @@ our %ATTR = (
   156 => $TYPE{'Power Crystal'},
   158 => $TYPE{Disease},
   163 => $TYPE{'Item Transformer'},
-  165 => $TYPE{'Safe ground'}
+  165 => $TYPE{'Safe ground'},
+  999 => $TYPE{Ability}
 );
 
 our %TYPENAME = (

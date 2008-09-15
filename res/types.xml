@@ -780,7 +780,8 @@
 </type>
 
 <!--####################################################################-->
-<type number="110" name="Ability">
+<!-- former typ 110, which is 'inscribable' in deliantra, and was never used in cf afaik -->
+<type number="999" name="Ability">
   <ignore>
     <ignore_list name="system_object" />
   </ignore>

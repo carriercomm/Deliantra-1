@@ -1,5 +1,13 @@
 Changes for Deliantra perl extension
 
+1.23  Thu Jan 15 00:40:23 CET 2009
+	- allow map scrolling with mod1/meta + button1 in addition
+          to the middle mouse button.
+        - added no_skill_ident flag for readables.
+        - add mapscript type.
+        - convert "connected" slot to type string.
+        - add send_pickup request.
+
 1.222 Tue Sep 16 01:38:19 CEST 2008
 	- remove type 110 (formerly ability, now inscribable).
 

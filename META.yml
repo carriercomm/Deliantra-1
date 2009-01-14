@@ -1,10 +1,10 @@
 --- #YAML:1.0
 name:                Deliantra
-version:             1.222
+version:             1.23
 abstract:            ~
 license:             ~
 author:              ~
-generated_by:        ExtUtils::MakeMaker version 6.44
+generated_by:        ExtUtils::MakeMaker version 6.42
 distribution_type:   module
 requires:     
     AnyEvent:                      4

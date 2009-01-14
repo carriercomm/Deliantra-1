@@ -95,7 +95,9 @@ sub INIT_INSTANCE {
 
       my ($x, $y) = ($event->x, $event->y);
 
-      if ($_[1]->button == 2 && !$self->{in_drag}) {
+#      warn "yuna ", $_[1]->button, " * ", $_[1]->state, "\n";#d#
+      if (($_[1]->button == 2 || ($_[1]->button == 1 && $_[1]->state * ["mod1-mask", "meta-mask"]))
+          && !$self->{in_drag}) {
          $self->disable_tooltip;
 
          $_[0]->grab_focus;

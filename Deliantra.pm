@@ -6,7 +6,7 @@ Deliantra - Deliantra suppport module to read/write archetypes, maps etc.
 
 package Deliantra;
 
-our $VERSION = '1.222';
+our $VERSION = '1.23';
 
 use strict;
 
@@ -71,7 +71,7 @@ our @FIELD_ORDER = (qw(
 
    name name_pl custom_name attach title race
    slaying skill msg lore other_arch
-   face animation is_animated
+   sound sound_destroy face animation is_animated
    magicmap smoothlevel smoothface
    str dex con wis pow cha int
    hp maxhp sp maxsp grace maxgrace
@@ -433,6 +433,8 @@ sub normalize_arch($) {
 
    normalize_object $ob;
 
+   return if $ob->{_atype} eq "object";
+
    my $arch = $ARCH{$ob->{_name}}
       or (warn "$ob->{_name}: no such archetype", return $ob);
 
@@ -516,7 +518,7 @@ sub read_arch($;$) {
    my ($more, $prev);
    my $comment;
 
-   open my $fh, "<:raw:perlio:utf8", $path
+   open my $fh, "<:utf8", $path
       or Carp::croak "$path: $!";
 
 #  binmode $fh;

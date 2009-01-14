@@ -15,6 +15,7 @@ bin/cfmap-normalize
 bin/cfmap-plushify
 bin/cfmap-tagify
 bin/cfxmlrender
+bin/cf-slotutil
 res2pm
 res/README
 res/autojoin.txt

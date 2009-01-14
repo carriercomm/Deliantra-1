@@ -1140,6 +1140,18 @@ sub send_command {
    }
 }
 
+=item $conn->send_pickup ($pickup)
+
+Sets the pickup configuration.
+
+=cut
+
+sub send_pickup {
+   my ($self, $pickup) = @_;
+
+   $self->send_command ("pickup " . ($pickup | PICKUP_NEWMODE));
+}
+
 sub send_queue {
    my ($self, $cmd) = @_;
 

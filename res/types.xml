@@ -874,7 +874,7 @@
 
     Note that the maximum possible for &lt;drop amount&gt; is 32767.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     If a connection value is set, the altar will trigger all objects
     with the same value, when activated. This will only work once.
   </attribute>
@@ -929,7 +929,7 @@
 
     Note that the maximum possible for &lt;drop amount&gt; is 32767.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     If a connection value is set, the altar will trigger all objects
     with the same value, when activated. This will only work once.
   </attribute>
@@ -1220,6 +1220,10 @@
     This is the key string of the book. The key string is checked by an inventory checker.
     (This is used eg. for the gate/port passes in scorn)
   </attribute>
+  <attribute arch="no_skill_ident" editor="no skill ident" type="bool">
+    If this flag is true the player won't be able to identify this
+    item with by using a skill.
+  </attribute>
 </type>
 
 <!--####################################################################-->
@@ -1315,7 +1319,7 @@
     The button is pressed (triggered), as soon as
     &lt;press weigh&gt; gram are placed ontop of it.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     Every time the button is pressed or released, all objects
     with the same &lt;connection&gt; value are activated.
   </attribute>
@@ -1534,6 +1538,12 @@
   <attribute arch_begin="msg" arch_end="endmsg" editor="description" type="text">
     This text may contain a description of the converter.
   </attribute>
+  <attribute arch="precious" editor="output unpaid" type="bool">
+    If the converter has this flag set the generated items will
+    be flagged as unpaid. Useful if you want to make a converter in a shop.
+    (For instance for 'dragon scale' to 'dragon shield' converters in some
+    armour shops.)
+  </attribute>
 </type>
 
 <!--####################################################################-->
@@ -1559,7 +1569,7 @@
     one of the inventory items is duplicated. The duplicated item is randomly
     chosen from all items present.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     Whenever the connection value is activated,
     the creator gets triggered.
   </attribute>
@@ -1615,7 +1625,7 @@
     Actually it does also check for the &lt;key string&gt; in key-objects,
     but for this case inventory checkers are often more powerful to use.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     When the detector is triggered, all objects with the same
     connection value get activated.
   </attribute>
@@ -1629,6 +1639,31 @@
     The speed left. This value is incremented by &lt;speed&gt; on every tick.
     If it is larger than 0, the detector checks, and the speed is decremented
     by 1.
+  </attribute>
+</type>
+
+<!--####################################################################-->
+<type number="164" name="Map Script">
+  <ignore>
+    <ignore_list name="system_object" />
+  </ignore>
+  <description><![CDATA[
+    The map script object is a very special object that can react to connected
+    events and executes a perl script.
+  ]]>
+  </description>
+  <use><![CDATA[
+    The perl script gets passed an $activator object and can use the set/get/find/timer functions
+    to react to/trigger other objects.
+  ]]>
+  </use>
+  <attribute arch="connected" editor="connection" type="string">
+     When the map script object is triggered, it will execute
+     the perl script with the triggering object as $activator.
+  </attribute>
+  &activate_on;
+  <attribute arch_begin="msg" arch_end="endmsg" editor="script" type="text">
+    This perl script will be executed each time the objetc is triggered.
   </attribute>
 </type>
 
@@ -1893,7 +1928,7 @@
     &lt;multiply factor&gt;. If it is set to zero, all target objects
     will be destroyed.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     An activator (lever, altar, button, etc) with matching connection value
     is able to trigger this duplicator. Be very careful that players cannot
     abuse it to create endless amounts of money or other valuable stuff!
@@ -2130,7 +2165,7 @@
   <attribute arch="speed" value="1" type="float">
     The speed of the gate affects how fast it is closing/opening.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     Whenever the inventory checker is triggered, all objects with identical
     &lt;connection&gt; value get activated. This only makes sense together with
     &lt;blocking passage&gt; disabled.
@@ -2209,7 +2244,7 @@
     but vampires can do it for example.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     Every time the handle is applied, all objects
     with the same &lt;connection&gt; value are activated.
   </attribute>
@@ -2472,7 +2507,7 @@
     Enabled means having that object is a match.
     Disabled means not having that object is a match.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     Whenever the inventory checker is triggered, all objects with identical
     &lt;connection&gt; value get activated. This only makes sense together with
     &lt;blocking passage&gt; disabled.
@@ -2623,7 +2658,7 @@
     creative here.]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     The Magic_ear will trigger all objects with the
     same connection value, every time it is activated.
   </attribute>
@@ -2684,7 +2719,7 @@
     spells. Arch default is level 1 - you should always set this value
     to meet the overall difficulty of your map.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     Every time the &lt;connection&gt; value is triggered, the wall will cast
     it's spell. You should set &lt;casting speed&gt; to zero, or this won't
     have much visible effect.
@@ -2757,7 +2792,7 @@
     If the player already has a force with that &lt;key string&gt;,
     there won't be inserted a second one.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     When the detector is triggered, all objects with the same
     connection value get activated.
   </attribute>
@@ -3238,7 +3273,7 @@
                     enabled for continous operation, you need to
                     insert a &lt;connection&gt; value!
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     This should only be set in combination with &lt;mood number&gt; 4.
     Normally, monsters are affected by the mood floor as soon as they
     step on it. But charming (monster -&gt; pet) is too powerful,
@@ -3372,7 +3407,7 @@
     is a match. Very useful if you want to open a gate for players
     but not for monsters.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     When the pedestal is triggered, all objects with the same
     connection value get activated.
   </attribute>
@@ -3403,7 +3438,7 @@
   <attribute arch="range" editor="spread radius" type="int">
     The radius of the square area that the pit will randomly put the player into (0 to 3, default 1).
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     When a &lt;connection&gt; value is set, the pit can be opened/closed
     by activating the connection.
   </attribute>
@@ -4039,7 +4074,7 @@
     hints about hidden secrets/dangers. Place signs to provide the player
     with all kinds of useful information for getting along in your maps.]]>
   </use>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     When a connection value is set, the message will be printed whenever
     the connection is triggered. This should be used in combination with
     &lt;invisible&gt; enabled and &lt;activate by walking/flying&gt; disabled.
@@ -4437,7 +4472,7 @@
     please DO NOT use that. It turned out to be a source for numerous
     map-bugs.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     If a connection value is set, the teleporter will be activated
     whenever the connection is triggered. To use this properly,
     &lt;activation speed&gt; must be zero.
@@ -4476,7 +4511,7 @@
     maps more complex than "one-way".]]>
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     Whenever the inventory checker is triggered, all objects with identical
     &lt;connection&gt; value get activated. This only makes sense together with
     &lt;blocking passage&gt; disabled. If unset, the gate opens automatically
@@ -4553,7 +4588,7 @@
     This attribute defines what attacktype to use for direct damage when
     the trap detonates.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
     When the trap is detonated, all objects with the same
     connection value get activated.
   </attribute>
@@ -4686,7 +4721,7 @@
     If the player already has a force with that &lt;key string&gt;,
     there won't be inserted a second one.
   </attribute>
-  <attribute arch="connected" editor="connection" type="int">
+  <attribute arch="connected" editor="connection" type="string">
    Unlike a regular marker this is the connection that triggers this marker to activate.
   </attribute>
   <attribute arch="food" editor="mark duration" type="int">

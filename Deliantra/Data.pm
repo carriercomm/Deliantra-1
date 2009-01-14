@@ -549,7 +549,7 @@ our %TYPE = (
 	{
 	  desc => 'If a connection value is set, the altar will trigger all objects with the same value, when activated. This will only work once.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -606,7 +606,7 @@ our %TYPE = (
 	{
 	  desc => 'If a connection value is set, the altar will trigger all objects with the same value, when activated. This will only work once.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -1168,6 +1168,14 @@ our %TYPE = (
 	  name => 'key string',
 	  type => 'string'
 	}
+      ],
+      [
+	'no_skill_ident',
+	{
+	  desc => 'If this flag is true the player won\'t be able to identify this item with by using a skill.',
+	  name => 'no skill ident',
+	  type => 'bool'
+	}
       ]
     ],
     desc => 'Applying a book, the containing message is displayed to the player.',
@@ -1289,7 +1297,7 @@ our %TYPE = (
 	{
 	  desc => 'Every time the button is pressed or released, all objects with the same <connection> value are activated.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -1560,6 +1568,14 @@ our %TYPE = (
 	  name => 'description',
 	  type => 'text'
 	}
+      ],
+      [
+	'precious',
+	{
+	  desc => 'If the converter has this flag set the generated items will be flagged as unpaid. Useful if you want to make a converter in a shop. (For instance for \'dragon scale\' to \'dragon shield\' converters in some armour shops.)',
+	  name => 'output unpaid',
+	  type => 'bool'
+	}
       ]
     ],
     desc => 'Converters are like "exchange tables". When the player drops a specific type of items, they get converted into other items, at a predefined exchange-ratio.',
@@ -1596,7 +1612,7 @@ our %TYPE = (
 	{
 	  desc => 'Whenever the connection value is activated, the creator gets triggered.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -1685,7 +1701,7 @@ our %TYPE = (
 	{
 	  desc => 'When the detector is triggered, all objects with the same connection value get activated.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -2117,7 +2133,7 @@ our %TYPE = (
 	{
 	  desc => 'An activator (lever, altar, button, etc) with matching connection value is able to trigger this duplicator. Be very careful that players cannot abuse it to create endless amounts of money or other valuable stuff!',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -2663,7 +2679,7 @@ our %TYPE = (
 	{
 	  desc => 'Whenever the inventory checker is triggered, all objects with identical <connection> value get activated. This only makes sense together with <blocking passage> disabled.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -2780,7 +2796,7 @@ our %TYPE = (
 	{
 	  desc => 'Every time the handle is applied, all objects with the same <connection> value are activated.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -3277,7 +3293,7 @@ our %TYPE = (
 	{
 	  desc => 'Whenever the inventory checker is triggered, all objects with identical <connection> value get activated. This only makes sense together with <blocking passage> disabled.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -3475,7 +3491,7 @@ our %TYPE = (
 	{
 	  desc => 'The Magic_ear will trigger all objects with the same connection value, every time it is activated.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -3518,7 +3534,7 @@ our %TYPE = (
 	{
 	  desc => 'Every time the <connection> value is triggered, the wall will cast it\'s spell. You should set <casting speed> to zero, or this won\'t have much visible effect.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -3786,6 +3802,49 @@ our %TYPE = (
     ],
     use => 'Spellcasting walls pose an interesting alternative to monsters. Usually they are set to be undestroyable. Thus, while monsters in a map can be cleared out, the magic walls remain. Low level characters for example will not be able to pass through their spell-area, hence they cannot loot a map that a high level character might have cleared out. <br><br> Another point of magic walls is that if the player dies, he has to face them all again. Magic walls can add a kind of "permanent thrill" to your maps. <br><br> Be careful that your magic walls don\'t kill the monsters on a map. If placing monsters, eventually take ones that are immune to the walls\' spell(s). <br><br> It is possible to make walls rotate when triggered. But that is so confusing (and useless IMHO) that I did not mention it above. You can find a working example on the map "/pup_land/castle_eureca/castle_eureca8".'
   },
+  'Map Script' => {
+    attr => [
+      [
+	'connected',
+	{
+	  desc => 'When the map script object is triggered, it will execute the perl script with the triggering object as $activator.',
+	  name => 'connection',
+	  type => 'string'
+	}
+      ],
+      [
+	'activate_on_push',
+	{
+	  desc => 'Whether the teleporter should only be activated on push.',
+	  name => 'activate on push',
+	  type => 'bool'
+	}
+      ],
+      [
+	'activate_on_release',
+	{
+	  desc => 'Whether the teleporter should only be activated on release.',
+	  name => 'activate on release',
+	  type => 'bool'
+	}
+      ],
+      [
+	'msg',
+	{
+	  desc => 'This perl script will be executed each time the objetc is triggered.',
+	  end => 'endmsg',
+	  name => 'script',
+	  type => 'text'
+	}
+      ]
+    ],
+    desc => 'The map script object is a very special object that can react to connected events and executes a perl script.',
+    ignore => [
+      $IGNORE_LIST{system_object}
+    ],
+    name => 'Map Script',
+    use => 'The perl script gets passed an $activator object and can use the set/get/find/timer functions to react to/trigger other objects.'
+  },
   Marker => {
     attr => [
       [
@@ -3808,7 +3867,7 @@ our %TYPE = (
 	{
 	  desc => 'When the detector is triggered, all objects with the same connection value get activated.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -4642,7 +4701,7 @@ our %TYPE = (
 	{
 	  desc => 'This should only be set in combination with <mood number> 4. Normally, monsters are affected by the mood floor as soon as they step on it. But charming (monster -> pet) is too powerful, so it needs to be activated. Typically it is connected to an altar, for buying a "hireling". But a powerful pet could as well be the reward for solving a quest. Or even better: It could be *part* of a quest!',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -4781,7 +4840,7 @@ our %TYPE = (
 	{
 	  desc => 'When the pedestal is triggered, all objects with the same connection value get activated.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -4822,7 +4881,7 @@ our %TYPE = (
 	{
 	  desc => 'When a <connection> value is set, the pit can be opened/closed by activating the connection.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -5909,7 +5968,7 @@ our %TYPE = (
 	{
 	  desc => 'When a connection value is set, the message will be printed whenever the connection is triggered. This should be used in combination with <invisible> enabled and <activate by walking/flying> disabled. If activating your magic_mouth this way, the message will not only be printed to one player, but all players on the current map.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -6630,7 +6689,7 @@ our %TYPE = (
 	{
 	  desc => 'If a connection value is set, the teleporter will be activated whenever the connection is triggered. To use this properly, <activation speed> must be zero.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -6687,7 +6746,7 @@ our %TYPE = (
 	{
 	  desc => 'Whenever the inventory checker is triggered, all objects with identical <connection> value get activated. This only makes sense together with <blocking passage> disabled. If unset, the gate opens automatically after some time.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -6841,7 +6900,7 @@ our %TYPE = (
 	{
 	  desc => 'When the trap is detonated, all objects with the same connection value get activated.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -6985,7 +7044,7 @@ our %TYPE = (
 	{
 	  desc => 'Unlike a regular marker this is the connection that triggers this marker to activate.',
 	  name => 'connection',
-	  type => 'int'
+	  type => 'string'
 	}
       ],
       [
@@ -7902,6 +7961,7 @@ our %ATTR = (
   156 => $TYPE{'Power Crystal'},
   158 => $TYPE{Disease},
   163 => $TYPE{'Item Transformer'},
+  164 => $TYPE{'Map Script'},
   165 => $TYPE{'Safe ground'},
   999 => $TYPE{Ability}
 );

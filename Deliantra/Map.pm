@@ -88,7 +88,10 @@ sub new_pickmap {
             $x = 0;
          }
 
-         $map->{map}[$x - $x1][$y - $y1] = [$archs->[$i]];
+         $map->{map}[$x - $x1][$y - $y1] = [{
+            _name  => $archs->[$i]->{_name},
+            _atype => 'arch',
+         }];
 
          $x += $x2 - $x1 + 1;
 

@@ -6,9 +6,9 @@ Deliantra - Deliantra suppport module to read/write archetypes, maps etc.
 
 package Deliantra;
 
-our $VERSION = '1.23';
+our $VERSION = '1.24';
 
-use strict;
+use common::sense;
 
 use base 'Exporter';
 
@@ -153,7 +153,7 @@ our %MOVE_TYPE = (
    all      => MOVE_ALL,
 );
 
-our @MOVE_TYPE = keys %MOVE_TYPE;
+our @MOVE_TYPE = qw(all ship boat swim flying fly_high fly_low walk);
 
 {
    package Deliantra::MoveType;
@@ -184,6 +184,10 @@ our @MOVE_TYPE = keys %MOVE_TYPE;
       'eq' => sub { "$_[0]" eq "$_[1]" },
       'ne' => sub { "$_[0]" ne "$_[1]" },
    ;
+
+   sub TO_JSON {
+      $_[0][0]
+   }
 }
 
 sub Deliantra::MoveType::new {

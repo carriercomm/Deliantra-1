@@ -16,7 +16,7 @@ Deliantra::MapWidget - Gtk2 widget displaying cf maps
 
 package Deliantra::MapWidget;
 
-use strict;
+use common::sense;
 
 use Glib;
 use Gtk2;

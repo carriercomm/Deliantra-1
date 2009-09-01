@@ -18,7 +18,7 @@ package Deliantra::Protocol::Base;
 
 our $VERSION = '1.22';
 
-use strict;
+use common::sense;
 
 use AnyEvent;
 use AnyEvent::Socket ();

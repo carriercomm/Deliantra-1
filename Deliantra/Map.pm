@@ -8,7 +8,7 @@ package Deliantra::Map;
 
 our $VERSION = '0.1';
 
-use strict;
+use common::sense;
 
 use Carp ();
 use Deliantra;

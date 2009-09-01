@@ -16,7 +16,7 @@ package Deliantra::Protocol::Constants;
 
 our $VERSION = '0.1';
 
-use strict;
+use common::sense;
 
 use AnyEvent;
 use IO::Socket::INET;
@@ -184,8 +184,6 @@ eval join "\n", (map "sub $_ () { $CONSTANTS{$_} }", keys %CONSTANTS), 1
 
 sub import {
    my $caller = caller;
-
-   no strict;
 
    *{"$caller\::$_"} = \&$_
       for keys %CONSTANTS;

@@ -676,7 +676,7 @@
   <attribute arch="glow_radius" editor="glow radius" type="int">
     If &lt;glow radius&gt; is set to a value greater zero, the object
     appears lit up on dark maps. &lt;glow radius&gt; can be a value
-    between 0 and 4, the higher, the more light does the object emit.
+    between 0 and 9, the higher, the more light does the object emit.
   </attribute>
   <attribute arch="material" editor="material" type="bitmask_material">
     This bitmask-value informs the player of which material(s) the
@@ -842,6 +842,59 @@
     abilities like a dragon's firebreath are an exception.
     Note that non-magical abilities are more dangerous because
     magic resistance does not protect from those.</attribute>
+</type>
+
+<!--####################################################################-->
+
+<type number="81" name="Torch">
+  <description><![CDATA[
+    Torches are a special kind of Lamp, they are worn out by repeatedly
+    lightening them up (when the is_lightable flag is set) and otherwise
+    they can only be used once.]]>
+  </description>
+  <attribute arch="food" editor="burning duration" type="int">
+     This field specifies the burning duration of the torch.
+  </attribute>
+  <attribute arch="range" editor="enabled glow radius" type="int">
+     This field sets the glow radius of the torch if it is enabled.
+     If you want to make a torch that is already burning set the 
+     "glow radius" field.
+  </attribute>
+  <attribute arch="level" editor="level" type="int">
+    If this field specyfies the cursed effect's level. If it is
+    0 no cursed effect will be generate. See also the "cursed" flag.
+  </attribute>
+  <attribute arch="cursed" editor="cursed" type="bool">
+    Cursed torches, which have a level above 0, explode if the
+    player applies them.
+  </attribute>
+</type>
+
+<type number="82" name="Lamp">
+  <description><![CDATA[
+    Lamps are carryable light sources for players with a fuel tank.]]>
+  </description>
+  <attribute arch="speed" editor="burn speed" type="float">
+     This field is the speed of the lamp. (If the value 0.00208 is given
+     here the fuel field will specify the burning duration in minutes.)
+  </attribute>
+  <attribute arch="food" editor="fuel" type="int">
+     This field sets the burning duration of the lamp, which depends on the speed
+     field of this object.
+  </attribute>
+  <attribute arch="range" editor="enabled glow radius" type="int">
+     This field sets the glow radius of the lamp if it is enabled.
+     If you want to make a lamp that is already burning set the 
+     "glow radius" field.
+  </attribute>
+  <attribute arch="level" editor="level" type="int">
+    If this field specyfies the cursed effect's level. If it is
+    0 no cursed effect will be generate. See also the "cursed" flag.
+  </attribute>
+  <attribute arch="cursed" editor="cursed" type="bool">
+    Cursed lamps, which have a level above 0, explode if the
+    player applies them.
+  </attribute>
 </type>
 
 <!--####################################################################-->

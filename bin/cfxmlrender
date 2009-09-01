@@ -9,7 +9,7 @@ use Cwd;
 use File::Spec::Functions;
 use strict;
 
-our $DEBUG = 0;
+our $DEBUG = 1;
 
 sub slurp { open FO, $_[0] or die "Couldn't open $_[0]: $!"; return join '', <FO> }
 
@@ -188,7 +188,10 @@ sub render_dir {
    $a = $dir_to_degree{$dir_n};
    $a = deg2rad - $a; # -$a because we want a clockwise rotation
 
-   remove_tags ($tree, qw/light render camera background/);
+   remove_tags ($tree, qw/render camera background/);
+   if (!$cfg->{preserve_light}) {
+      remove_tags ($tree, qw/light/);
+   }
    filter_tags ($tree, 
       object => sub {
          my ($tag, $con) = @_;

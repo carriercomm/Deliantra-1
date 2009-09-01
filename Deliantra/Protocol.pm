@@ -20,7 +20,7 @@ BGIN { die "FATAL: Deliantra::Protocol needs to be rewritten to be properly subc
 
 our $VERSION = '0.1';
 
-use strict;
+use common::sense;
 
 sub feed_map1a {
    my ($self, $data) = @_;

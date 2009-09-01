@@ -1,5 +1,11 @@
 Changes for Deliantra perl extension
 
+1.24  Tue Sep  1 23:37:04 CEST 2009
+	- use common::sense.
+	- add TO_JSON to MoveType.
+        - added lamp & torch archetypes.
+        - fix a bug in the movetype normalising algorithm.
+
 1.23  Thu Jan 15 00:40:23 CET 2009
 	- allow map scrolling with mod1/meta + button1 in addition
           to the middle mouse button.

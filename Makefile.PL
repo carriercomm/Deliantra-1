@@ -8,6 +8,7 @@ my $mm = MM->new({
        SUFFIX	=> '.gz',
     },
     PREREQ_PM   => {
+       common::sense => 0,
        AnyEvent      => 4,
        JSON::XS      => 2.01,
        Compress::LZF => 3.11,

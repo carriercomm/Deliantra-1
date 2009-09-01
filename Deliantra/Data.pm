@@ -377,7 +377,7 @@ our %DEFAULT_ATTR = (
     [
       'glow_radius',
       {
-	desc => 'If <glow radius> is set to a value greater zero, the object appears lit up on dark maps. <glow radius> can be a value between 0 and 4, the higher, the more light does the object emit.',
+	desc => 'If <glow radius> is set to a value greater zero, the object appears lit up on dark maps. <glow radius> can be a value between 0 and 9, the higher, the more light does the object emit.',
 	name => 'glow radius',
 	type => 'int'
       }
@@ -3419,6 +3419,52 @@ our %TYPE = (
     ],
     desc => 'When carrying a key, a normal door can be opened. The key will disappear.',
     name => 'Key'
+  },
+  Lamp => {
+    attr => [
+      [
+	'speed',
+	{
+	  desc => 'This field is the speed of the lamp. (If the value 0.00208 is given here the fuel field will specify the burning duration in minutes.)',
+	  name => 'burn speed',
+	  type => 'float'
+	}
+      ],
+      [
+	'food',
+	{
+	  desc => 'This field sets the burning duration of the lamp, which depends on the speed field of this object.',
+	  name => 'fuel',
+	  type => 'int'
+	}
+      ],
+      [
+	'range',
+	{
+	  desc => 'This field sets the glow radius of the lamp if it is enabled. If you want to make a lamp that is already burning set the "glow radius" field.',
+	  name => 'enabled glow radius',
+	  type => 'int'
+	}
+      ],
+      [
+	'level',
+	{
+	  desc => 'If this field specyfies the cursed effect\'s level. If it is 0 no cursed effect will be generate. See also the "cursed" flag.',
+	  name => 'level',
+	  type => 'int'
+	}
+      ],
+      [
+	'cursed',
+	{
+	  desc => 'Cursed lamps, which have a level above 0, explode if the player applies them.',
+	  name => 'cursed',
+	  type => 'bool'
+	}
+      ]
+    ],
+    desc => 'Lamps are carryable light sources for players with a fuel tank.',
+    name => 'Lamp'
   },
   'Locked Door' => {
     attr => [
@@ -6837,6 +6883,44 @@ our %TYPE = (
     name => 'Timed Gate',
     use => 'Use gates to divide your maps into separated areas. After solving area A, the player gains access to area B, and so on. Make your maps more complex than "one-way".'
   },
+  Torch => {
+    attr => [
+      [
+	'food',
+	{
+	  desc => 'This field specifies the burning duration of the torch.',
+	  name => 'burning duration',
+	  type => 'int'
+	}
+      ],
+      [
+	'range',
+	{
+	  desc => 'This field sets the glow radius of the torch if it is enabled. If you want to make a torch that is already burning set the "glow radius" field.',
+	  name => 'enabled glow radius',
+	  type => 'int'
+	}
+      ],
+      [
+	'level',
+	{
+	  desc => 'If this field specyfies the cursed effect\'s level. If it is 0 no cursed effect will be generate. See also the "cursed" flag.',
+	  name => 'level',
+	  type => 'int'
+	}
+      ],
+      [
+	'cursed',
+	{
+	  desc => 'Cursed torches, which have a level above 0, explode if the player applies them.',
+	  name => 'cursed',
+	  type => 'bool'
+	}
+      ]
+    ],
+    desc => 'Torches are a special kind of Lamp, they are worn out by repeatedly lightening them up (when the is_lightable flag is set) and otherwise they can only be used once.',
+    name => 'Torch'
+  },
   Trap => {
     attr => [
       [
@@ -7930,6 +8014,8 @@ our %ATTR = (
   72 => $TYPE{Flesh},
   73 => $TYPE{Inorganic},
   74 => $TYPE{'Skill Tool'},
+  81 => $TYPE{Torch},
+  82 => $TYPE{Lamp},
   83 => $TYPE{Duplicator},
   85 => $TYPE{Spellbook},
   87 => $TYPE{Cloak},

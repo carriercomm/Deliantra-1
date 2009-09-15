@@ -6,7 +6,7 @@ Deliantra - Deliantra suppport module to read/write archetypes, maps etc.
 
 package Deliantra;
 
-our $VERSION = '1.24';
+our $VERSION = '1.25';
 
 use common::sense;
 
@@ -153,7 +153,7 @@ our %MOVE_TYPE = (
    all      => MOVE_ALL,
 );
 
-our @MOVE_TYPE = qw(all ship boat swim flying fly_high fly_low walk);
+our @MOVE_TYPE = qw(all walk flying fly_low fly_high swim boat ship);
 
 {
    package Deliantra::MoveType;

@@ -1,5 +1,8 @@
 Changes for Deliantra perl extension
 
+1.25  Tue Sep 15 21:06:16 CEST 2009
+	- tuned normalisation again to reduce differences.
+
 1.24  Tue Sep  1 23:37:04 CEST 2009
 	- use common::sense.
 	- add TO_JSON to MoveType.

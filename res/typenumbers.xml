@@ -125,7 +125,7 @@
   <type number="107" name="POISONCLOUD" />
   <type number="108" name="FIREHOLES" />
   <type number="109" name="WAND" />
-  <!--<type number="110" name="ABILITY" />-->
+  <type number="110" name="INSCRIBABLE" />
   <type number="111" name="SCROLL" />
   <type number="112" name="DIRECTOR" />
   <type number="113" name="GIRDLE" />

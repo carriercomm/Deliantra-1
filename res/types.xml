@@ -103,12 +103,12 @@
                       false      CDATA #IMPLIED>
 
   <!ENTITY move_on "
-     <attribute arch='move_on' editor='movement type' type='movement_type'>
+     <attribute arch='move_on' editor='movement on' type='movement_type'>
         Which movement types automatically (as opposed to manually) activate this object.
      </attribute>
   ">
   <!ENTITY move_off "
-     <attribute arch='move_off' editor='movement type' type='movement_type'>
+     <attribute arch='move_off' editor='movement off' type='movement_type'>
         Which movement types deactivate this object (e.g. button).
      </attribute>
   ">
@@ -118,10 +118,13 @@
         or grants (e.g. for amulets).
      </attribute>
   ">
-  <!ENTITY movement_types_terrain "
+  <!ENTITY move_block "
      <attribute arch='move_block' editor='blocked movement' type='movement_type'>
        Objects using these movement types cannot move over this space.
      </attribute>
+  ">
+  <!ENTITY movement_types_terrain "
+     &move_block;
      <attribute arch='move_allow' editor='allowed movement' type='movement_type'>
        Objects using these movement types are allowed to move over this space. Takes
        precedence over 'blocked movements'.
@@ -351,6 +354,12 @@
       </section>
    ">
 
+  <!ENTITY match_compat "
+    If the string starts with 'match ', then it is interpreted
+    as a match expression (e.g. 'match type=POTION', or 'match type=SPELL
+    in applied type=CONTAINER in inv in originator'). For details, see
+    http://pod.tst.eu/http://cvs.schmorp.de/deliantra/server/lib/cf/match.pm
+  ">
 ]>
 
 <types>
@@ -470,6 +479,8 @@
   <entry value="2" name="calm" />
   <entry value="3" name="sleep" />
   <entry value="4" name="charm" />
+  <entry value="5" name="destroy monster" />
+  <entry value="6" name="destroy pet" />
 </list>
 
 <list name="potion_effect">
@@ -694,7 +705,7 @@
   </attribute>
   <attribute arch="blocksview" editor="block view" type="bool">
     If an item is set to block view, players (and monsters) cannot
-    see byond it unless they cross it or manage to stand ontop.
+    see beyond it unless they cross it or manage to stand ontop.
   </attribute>
   <attribute arch="identified" editor="identified" type="bool">
     If an item is identified, the player has full knowledge about it.
@@ -848,10 +859,17 @@
 
 <type number="81" name="Torch">
   <description><![CDATA[
-    Torches are a special kind of Lamp, they are worn out by repeatedly
-    lightening them up (when the is_lightable flag is set) and otherwise
-    they can only be used once.]]>
+    Torches are a special kind of Lamp that offer the option of lighting them
+    up without using a lighter (These torches are usually
+    called 'pyrophor torches'. See also the 'reignitable' setting).
+    The other kind of torches, that are reignitable, can be put out and
+    put on again using a lighter.]]>
   </description>
+  <attribute arch="is_lightable" editor="reignitable" type="bool">
+     This flag controls whether the torch can be lit up again using
+     a lighter or whether it can only be used once, in which case
+     they can be enabled by simply applying them without any special tools.
+  </attribute>
   <attribute arch="food" editor="burning duration" type="int">
      This field specifies the burning duration of the torch.
   </attribute>
@@ -916,6 +934,7 @@
     the name of an object. Yet, titles are not recognized by altars.
     If you want the player to have to drop a specific amount of money use "money".
     See also the "drop amount" attribute.
+    &match_compat;
   </attribute>
   <attribute arch="food" editor="drop amount" type="int">
     The drop amount specifies the amount of items (specified
@@ -971,6 +990,7 @@
     the name of an object. Yet, titles are not recognized by altars.
     If you want the player to have to drop a specific amount of money use "money".
     See also the "drop amount" attribute.
+    &match_compat;
   </attribute>
   <attribute arch="food" editor="drop amount" type="int">
     The drop amount specifies the amount of items (specified
@@ -1280,6 +1300,25 @@
 </type>
 
 <!--####################################################################-->
+<type number="110" name="Inscribable">
+  <description><![CDATA[
+    Inscribable Item - when inscribed, it becomes another object.]]>
+  </description>
+  <attribute arch="startequip" editor="godgiven item" type="bool">
+    A godgiven item vanishes as soon as the player
+    drops it to the ground.
+  </attribute>
+  <attribute arch="unique" editor="unique item" type="bool">
+    Unique items exist only one time on a server. If the item
+    is taken, lost or destroyed - it's gone for good.
+  </attribute>
+  <attribute arch="other_arch" editor="book/scroll arch" type="string">
+     This is the item created after being inscribed - scrolls are treated
+     like spell scrolls, all else will have it's message replaced.
+  </attribute>
+</type>
+
+<!--####################################################################-->
 <type number="99" name="Boots">
   <import_type name="Amulet" />
   <description><![CDATA[
@@ -1504,6 +1543,11 @@
   <attribute arch="slaying" editor="key string" type="string">
     If &lt;key string&gt; is set, only players with a special key
     of matching &lt;key string&gt; are able to open the container.
+
+    When the key string starts with "match ", then it is expected to
+    be a match expression, which will be applied to the player, so
+    you can use e.g. (match type=POTION in inv). Note that the matched
+    object will be removed.
   </attribute>
   <attribute arch="container" editor="maximum weight" type="int">
     The container can hold a maximum total weight of the given value
@@ -1627,8 +1671,8 @@
     the creator gets triggered.
   </attribute>
   &activate_on;
-  <attribute arch="lifesave" editor="infinit uses" type="bool">
-    If &lt;infinit uses&gt; is set, the creator will work
+  <attribute arch="lifesave" editor="unlimited uses" type="bool">
+    If &lt;unlimited uses&gt; is set, the creator will work
     infinitely, regardless of the value in &lt;number of uses&gt;.
   </attribute>
   <attribute arch="speed" editor="speed" type="float">
@@ -1663,14 +1707,12 @@
     <br><br>
     What is "unique" about them, compared to inv. checkers/ pedestals?
     - First, detectors check their square for a match periodically, not
-    instantly. Second, detectors check directly for object names. Third,
+    instantly, so generate much higher server load
+    Second, detectors check directly for object names. Third,
     detectors do not check the inventory of players/monsters.]]>
   </description>
-  <use><![CDATA[
-    There is one major speciality about detectors: You can detect spells
-    blown over a detector! To detect a lighting bolt for example, set
-    "slaying ligthing" and "speed 1.0". In combination with spellcasting
-    walls, this can be very useful for map-mechanisms.]]>
+  <use>
+    Best avoid this type at all costs, use a pedestal instead.
   </use>
   <attribute arch="no_pick" value="1" type="fixed" />
   <attribute arch="slaying" editor="match name" type="string">
@@ -1702,12 +1744,12 @@
   </ignore>
   <description><![CDATA[
     The map script object is a very special object that can react to connected
-    events and executes a perl script.
+    events and executes a perl script in the msg slot.
   ]]>
   </description>
   <use><![CDATA[
-    The perl script gets passed an $activator object and can use the set/get/find/timer functions
-    to react to/trigger other objects.
+    The perl script gets passed a $state value and $activator, $self, $originator objects and can use the set/get/find/timer functions
+    to react to/trigger other objects. See http://pod.tst.eu/http://cvs.schmorp.de/deliantra/server/lib/cf/mapscript.pm for details.
   ]]>
   </use>
   <attribute arch="connected" editor="connection" type="string">
@@ -1920,7 +1962,7 @@
     <ignore_list name="non_pickable" />
   </ignore>
   <description><![CDATA[
-    A door can be opened with a normal key. It also can be broken by attacking
+    A door can be opened with any normal key. It also can be broken by attacking
     it, and it can be defeated with the lockpicking skill. If a door is
     defeated, horizontally and vertically adjacent doors are automatically
     removed.]]>
@@ -2129,7 +2171,7 @@
   </attribute>
   <attribute arch="unique" editor="unique map" type="bool">
     Unique floor means that any items dropped on that spot
-    will be saved byond map reset. For permanent apartments,
+    will be saved beyond map reset. For permanent apartments,
     all floor tiles must be set &lt;unique map&gt;.
   </attribute>
   <attribute arch_begin="msg" arch_end="endmsg" editor="description" type="text">
@@ -2173,7 +2215,7 @@
   </attribute>
   <attribute arch="unique" editor="unique map" type="bool">
     Unique floor means that any items dropped on that spot
-    will be saved byond map reset. For permanent apartments,
+    will be saved beyond map reset. For permanent apartments,
     all floor tiles must be set &lt;unique map&gt;.
   </attribute>
   <attribute arch_begin="msg" arch_end="endmsg" editor="description" type="text">
@@ -2392,7 +2434,7 @@
   </attribute>
   <attribute arch="unique" editor="unique map" type="bool">
     Unique floor means that any items dropped on that spot
-    will be saved byond map reset. For permanent apartments,
+    will be saved beyond map reset. For permanent apartments,
     all floor tiles must be set &lt;unique map&gt;.
   </attribute>
 </type>
@@ -2427,7 +2469,7 @@
     <ignore_list name="non_pickable" />
   </ignore>
   <description><![CDATA[
-    Holy_altars are altars for the various religions. Praying
+    Holy Altars are altars for the various religions. Praying
     at a Holy_altar will make you a follower of that god, and
     if you already follow that god, you may get some extra bonus.]]>
   </description>
@@ -2670,6 +2712,11 @@
     is unique among the Deliantra mapset.
 
     DONT EVER USE the default string "set_individual_value".
+
+    When the key string starts with "match ", then it is expected to
+    be a match expression, which will be applied to the player, so
+    you can use e.g. (match type=POTION in inv). Note that the matched
+    object will be removed.
   </attribute>
   <attribute arch="no_magic" editor="restrict spells" type="bool">
     Restricting the use of spells to pass this door.
@@ -2823,7 +2870,8 @@
     A marker is an object that inserts an invisible force (a mark) into a
     player stepping on it. This force does nothing except containing a
     &lt;key string&gt; which can be discovered by detectors or inventory
-    checkers. It is also possible to use markers for removing marks again.
+    checkers. It is also possible to use markers for removing marks again
+    (by setting the "name" slot to the name of the marker to be removed).
     <br><br>
     Note that the player has no possibility to "see" his own marks,
     except by the effect that they cause on the maps.]]>
@@ -3459,12 +3507,63 @@
     If it is set to "player", any player stepping on the pedestal
     is a match. Very useful if you want to open a gate for players
     but not for monsters.
+
+    &match_compat;
   </attribute>
   <attribute arch="connected" editor="connection" type="string">
     When the pedestal is triggered, all objects with the same
     connection value get activated.
   </attribute>
   &move_on;
+</type>
+
+<!--####################################################################-->
+<type number="32" name="Pedestal Trigger">
+  <import_type name="Pedestal" />
+  <ignore>
+    <ignore_list name="non_pickable" />
+  </ignore>
+  <description><![CDATA[
+    Pedestal triggers are pedestals which reset after a short period
+    of time. Every time it is either applied or reset, the
+    &lt;connection&gt; value is triggered.]]>
+  </description>
+</type>
+
+<!--####################################################################-->
+<type number="19" name="Item Match">
+  <ignore>
+    <ignore_list name="non_pickable" />
+  </ignore>
+  <description><![CDATA[
+    Match objects use the deliantra matching language
+    (http://pod.tst.eu/http://cvs.schmorp.de/deliantra/server/lib/cf/match.pm)
+    to match items on the same mapspace (if move_on/off are unset) or
+    items trying to enter (if move_blocked is set).
+
+    If a connected value is given, then it is triggered if the first object
+    matching the expression is put on it, and the last is removed.]]>
+  </description>
+  <use><![CDATA[
+    If you want to trigger something else (e.g. a gate) when an item is above this object,
+    use the move_on/move_off settings.
+
+    If you want to keep something from entering if it has (or lacks) a specific item,
+    use the move_blocked setting.]]>
+  </use>
+  <attribute arch="no_pick" value="1" type="fixed" />
+  <attribute arch="slaying" editor="match expression" type="string">
+    &match_compat;
+
+    Optionally you can leave out the "match " prefix.
+  </attribute>
+  <attribute arch="connected" editor="connection" type="string">
+    When the match is triggered, all objects with the same
+    connection value get activated.
+  </attribute>
+  &move_on;
+  &move_off;
+  &move_block;
 </type>
 
 <!--####################################################################-->
@@ -4753,6 +4852,7 @@
     player stepping on it WHEN TRIGGERED. This force does nothing except containing a
     &lt;key string&gt; which can be discovered by detectors or inventory
     checkers. It is also possible to use markers for removing marks again.
+    (by setting the "name" slot to the name of the marker to be removed).
     <br><br>
     Note that the player has no possibility to "see" his own marks,
     except by the effect that they cause on the maps.]]>

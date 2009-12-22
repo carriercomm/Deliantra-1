@@ -24,3 +24,4 @@ res/typenumbers.xml
 res/types.xml
 eg/mapread
 META.yml                                 Module meta-data (added by MakeMaker)
+META.json                                Module meta-data (added by MakeMaker)

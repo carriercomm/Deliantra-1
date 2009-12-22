@@ -164,7 +164,9 @@ our %LIST = (
     1 => 'angry',
     2 => 'calm',
     3 => 'sleep',
-    4 => 'charm'
+    4 => 'charm',
+    5 => 'destroy monster',
+    6 => 'destroy pet'
   },
   potion_effect => {
     0 => '<none>',
@@ -410,7 +412,7 @@ our %DEFAULT_ATTR = (
     [
       'blocksview',
       {
-	desc => 'If an item is set to block view, players (and monsters) cannot see byond it unless they cross it or manage to stand ontop.',
+	desc => 'If an item is set to block view, players (and monsters) cannot see beyond it unless they cross it or manage to stand ontop.',
 	name => 'block view',
 	type => 'bool'
       }
@@ -524,14 +526,14 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ],
       [
 	'slaying',
 	{
-	  desc => 'This string specifies the item that must be put on the altar to activate it. It can either be the name of an archetype, or directly the name of an object. Yet, titles are not recognized by altars. If you want the player to have to drop a specific amount of money use "money". See also the "drop amount" attribute.',
+	  desc => 'This string specifies the item that must be put on the altar to activate it. It can either be the name of an archetype, or directly the name of an object. Yet, titles are not recognized by altars. If you want the player to have to drop a specific amount of money use "money". See also the "drop amount" attribute. If the string starts with \'match \', then it is interpreted as a match expression (e.g. \'match type=POTION\', or \'match type=SPELL in applied type=CONTAINER in inv in originator\'). For details, see http://pod.tst.eu/http://cvs.schmorp.de/deliantra/server/lib/cf/match.pm',
 	  name => 'match item name',
 	  type => 'string'
 	}
@@ -588,7 +590,7 @@ our %TYPE = (
       [
 	'slaying',
 	{
-	  desc => 'This string specifies the item that must be put on the altar to activate it. It can either be the name of an archetype, or directly the name of an object. Yet, titles are not recognized by altars. If you want the player to have to drop a specific amount of money use "money". See also the "drop amount" attribute.',
+	  desc => 'This string specifies the item that must be put on the altar to activate it. It can either be the name of an archetype, or directly the name of an object. Yet, titles are not recognized by altars. If you want the player to have to drop a specific amount of money use "money". See also the "drop amount" attribute. If the string starts with \'match \', then it is interpreted as a match expression (e.g. \'match type=POTION\', or \'match type=SPELL in applied type=CONTAINER in inv in originator\'). For details, see http://pod.tst.eu/http://cvs.schmorp.de/deliantra/server/lib/cf/match.pm',
 	  name => 'match item name',
 	  type => 'string'
 	}
@@ -637,7 +639,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ],
@@ -1265,7 +1267,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ],
@@ -1273,7 +1275,7 @@ our %TYPE = (
 	'move_off',
 	{
 	  desc => 'Which movement types deactivate this object (e.g. button).',
-	  name => 'movement type',
+	  name => 'movement off',
 	  type => 'movement_type'
 	}
       ],
@@ -1452,7 +1454,7 @@ our %TYPE = (
       [
 	'slaying',
 	{
-	  desc => 'If <key string> is set, only players with a special key of matching <key string> are able to open the container.',
+	  desc => 'If <key string> is set, only players with a special key of matching <key string> are able to open the container. When the key string starts with "match ", then it is expected to be a match expression, which will be applied to the player, so you can use e.g. (match type=POTION in inv). Note that the matched object will be removed.',
 	  name => 'key string',
 	  type => 'string'
 	}
@@ -1634,8 +1636,8 @@ our %TYPE = (
       [
 	'lifesave',
 	{
-	  desc => 'If <infinit uses> is set, the creator will work infinitely, regardless of the value in <number of uses>.',
-	  name => 'infinit uses',
+	  desc => 'If <unlimited uses> is set, the creator will work infinitely, regardless of the value in <number of uses>.',
+	  name => 'unlimited uses',
 	  type => 'bool'
 	}
       ],
@@ -1729,12 +1731,12 @@ our %TYPE = (
 	}
       ]
     ],
-    desc => 'Detectors work quite much like inv. checkers/pedestals: If the detector finds a specific object, it toggles its connected value. <br><br> What is "unique" about them, compared to inv. checkers/ pedestals? - First, detectors check their square for a match periodically, not instantly. Second, detectors check directly for object names. Third, detectors do not check the inventory of players/monsters.',
+    desc => 'Detectors work quite much like inv. checkers/pedestals: If the detector finds a specific object, it toggles its connected value. <br><br> What is "unique" about them, compared to inv. checkers/ pedestals? - First, detectors check their square for a match periodically, not instantly, so generate much higher server load Second, detectors check directly for object names. Third, detectors do not check the inventory of players/monsters.',
     ignore => [
       $IGNORE_LIST{system_object}
     ],
     name => 'Detector',
-    use => 'There is one major speciality about detectors: You can detect spells blown over a detector! To detect a lighting bolt for example, set "slaying ligthing" and "speed 1.0". In combination with spellcasting walls, this can be very useful for map-mechanisms.'
+    use => 'Best avoid this type at all costs, use a pedestal instead.'
   },
   Director => {
     attr => [
@@ -1751,7 +1753,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ]
@@ -2104,7 +2106,7 @@ our %TYPE = (
 	}
       ]
     ],
-    desc => 'A door can be opened with a normal key. It also can be broken by attacking it, and it can be defeated with the lockpicking skill. If a door is defeated, horizontally and vertically adjacent doors are automatically removed.',
+    desc => 'A door can be opened with any normal key. It also can be broken by attacking it, and it can be defeated with the lockpicking skill. If a door is defeated, horizontally and vertically adjacent doors are automatically removed.',
     ignore => [
       $IGNORE_LIST{non_pickable}
     ],
@@ -2194,7 +2196,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ],
@@ -2449,7 +2451,7 @@ our %TYPE = (
       [
 	'unique',
 	{
-	  desc => 'Unique floor means that any items dropped on that spot will be saved byond map reset. For permanent apartments, all floor tiles must be set <unique map>.',
+	  desc => 'Unique floor means that any items dropped on that spot will be saved beyond map reset. For permanent apartments, all floor tiles must be set <unique map>.',
 	  name => 'unique map',
 	  type => 'bool'
 	}
@@ -2560,7 +2562,7 @@ our %TYPE = (
       [
 	'unique',
 	{
-	  desc => 'Unique floor means that any items dropped on that spot will be saved byond map reset. For permanent apartments, all floor tiles must be set <unique map>.',
+	  desc => 'Unique floor means that any items dropped on that spot will be saved beyond map reset. For permanent apartments, all floor tiles must be set <unique map>.',
 	  name => 'unique map',
 	  type => 'bool'
 	}
@@ -2847,7 +2849,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ],
@@ -2910,7 +2912,7 @@ our %TYPE = (
       [
 	'unique',
 	{
-	  desc => 'Unique floor means that any items dropped on that spot will be saved byond map reset. For permanent apartments, all floor tiles must be set <unique map>.',
+	  desc => 'Unique floor means that any items dropped on that spot will be saved beyond map reset. For permanent apartments, all floor tiles must be set <unique map>.',
 	  name => 'unique map',
 	  type => 'bool'
 	}
@@ -3022,7 +3024,7 @@ our %TYPE = (
 	}
       ]
     ],
-    desc => 'Holy_altars are altars for the various religions. Praying at a Holy_altar will make you a follower of that god, and if you already follow that god, you may get some extra bonus.',
+    desc => 'Holy Altars are altars for the various religions. Praying at a Holy_altar will make you a follower of that god, and if you already follow that god, you may get some extra bonus.',
     ignore => [
       $IGNORE_LIST{non_pickable}
     ],
@@ -3247,6 +3249,36 @@ our %TYPE = (
       ]
     ]
   },
+  Inscribable => {
+    attr => [
+      [
+	'startequip',
+	{
+	  desc => 'A godgiven item vanishes as soon as the player drops it to the ground.',
+	  name => 'godgiven item',
+	  type => 'bool'
+	}
+      ],
+      [
+	'unique',
+	{
+	  desc => 'Unique items exist only one time on a server. If the item is taken, lost or destroyed - it\'s gone for good.',
+	  name => 'unique item',
+	  type => 'bool'
+	}
+      ],
+      [
+	'other_arch',
+	{
+	  desc => 'This is the item created after being inscribed - scrolls are treated like spell scrolls, all else will have it\'s message replaced.',
+	  name => 'book/scroll arch',
+	  type => 'string'
+	}
+      ]
+    ],
+    desc => 'Inscribable Item - when inscribed, it becomes another object.',
+    name => 'Inscribable'
+  },
   'Inventory Checker' => {
     attr => [
       [
@@ -3343,6 +3375,63 @@ our %TYPE = (
     ],
     name => 'Inventory Checker',
     use => 'Putting a check_inventory space in front of a gate (one below) and one on the opposite side works reasonably well as a control mechanism. Unlike the key/door-combo, this one works infinite since it is independant from map reset. Use it to put a "structure" into your maps: Player must solve area A to gain access to area B. This concept can be found in nearly every RPG - simple but effective.'
+  },
+  'Item Match' => {
+    attr => [
+      [
+	'no_pick',
+	{
+	  type => 'fixed',
+	  value => 1
+	}
+      ],
+      [
+	'slaying',
+	{
+	  desc => 'If the string starts with \'match \', then it is interpreted as a match expression (e.g. \'match type=POTION\', or \'match type=SPELL in applied type=CONTAINER in inv in originator\'). For details, see http://pod.tst.eu/http://cvs.schmorp.de/deliantra/server/lib/cf/match.pm Optionally you can leave out the "match " prefix.',
+	  name => 'match expression',
+	  type => 'string'
+	}
+      ],
+      [
+	'connected',
+	{
+	  desc => 'When the match is triggered, all objects with the same connection value get activated.',
+	  name => 'connection',
+	  type => 'string'
+	}
+      ],
+      [
+	'move_on',
+	{
+	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
+	  name => 'movement on',
+	  type => 'movement_type'
+	}
+      ],
+      [
+	'move_off',
+	{
+	  desc => 'Which movement types deactivate this object (e.g. button).',
+	  name => 'movement off',
+	  type => 'movement_type'
+	}
+      ],
+      [
+	'move_block',
+	{
+	  desc => 'Objects using these movement types cannot move over this space.',
+	  name => 'blocked movement',
+	  type => 'movement_type'
+	}
+      ]
+    ],
+    desc => 'Match objects use the deliantra matching language (http://pod.tst.eu/http://cvs.schmorp.de/deliantra/server/lib/cf/match.pm) to match items on the same mapspace (if move_on/off are unset) or items trying to enter (if move_blocked is set). If a connected value is given, then it is triggered if the first object matching the expression is put on it, and the last is removed.',
+    ignore => [
+      $IGNORE_LIST{non_pickable}
+    ],
+    name => 'Item Match',
+    use => 'If you want to trigger something else (e.g. a gate) when an item is above this object, use the move_on/move_off settings. If you want to keep something from entering if it has (or lacks) a specific item, use the move_blocked setting.'
   },
   'Item Transformer' => {
     attr => [
@@ -3485,7 +3574,7 @@ our %TYPE = (
       [
 	'slaying',
 	{
-	  desc => 'The <key string> in the door must be identical with the <key string> in the special key, then the door is unlocked. It is VERY important to set the <key string> to something that is unique among the Deliantra mapset. DONT EVER USE the default string "set_individual_value".',
+	  desc => 'The <key string> in the door must be identical with the <key string> in the special key, then the door is unlocked. It is VERY important to set the <key string> to something that is unique among the Deliantra mapset. DONT EVER USE the default string "set_individual_value". When the key string starts with "match ", then it is expected to be a match expression, which will be applied to the player, so you can use e.g. (match type=POTION in inv). Note that the matched object will be removed.',
 	  name => 'key string',
 	  type => 'string'
 	}
@@ -3884,12 +3973,12 @@ our %TYPE = (
 	}
       ]
     ],
-    desc => 'The map script object is a very special object that can react to connected events and executes a perl script.',
+    desc => 'The map script object is a very special object that can react to connected events and executes a perl script in the msg slot.',
     ignore => [
       $IGNORE_LIST{system_object}
     ],
     name => 'Map Script',
-    use => 'The perl script gets passed an $activator object and can use the set/get/find/timer functions to react to/trigger other objects.'
+    use => 'The perl script gets passed a $state value and $activator, $self, $originator objects and can use the set/get/find/timer functions to react to/trigger other objects. See http://pod.tst.eu/http://cvs.schmorp.de/deliantra/server/lib/cf/mapscript.pm for details.'
   },
   Marker => {
     attr => [
@@ -3958,7 +4047,7 @@ our %TYPE = (
 	}
       ]
     ],
-    desc => 'A marker is an object that inserts an invisible force (a mark) into a player stepping on it. This force does nothing except containing a &lt;key string&gt; which can be discovered by detectors or inventory checkers. It is also possible to use markers for removing marks again. <br><br> Note that the player has no possibility to "see" his own marks, except by the effect that they cause on the maps.',
+    desc => 'A marker is an object that inserts an invisible force (a mark) into a player stepping on it. This force does nothing except containing a &lt;key string&gt; which can be discovered by detectors or inventory checkers. It is also possible to use markers for removing marks again (by setting the "name" slot to the name of the marker to be removed). <br><br> Note that the player has no possibility to "see" his own marks, except by the effect that they cause on the maps.',
     ignore => [
       $IGNORE_LIST{system_object}
     ],
@@ -4876,7 +4965,7 @@ our %TYPE = (
       [
 	'slaying',
 	{
-	  desc => 'the <match race> defines the object we\'re looking for. If <match race> matches the monster\'s or the player\'s race, we have a match. Yes, pedestals can detect a player\'s race! E.g. you could create a place where only fireborns can enter, by setting "slaying unnatural". If it is set to "player", any player stepping on the pedestal is a match. Very useful if you want to open a gate for players but not for monsters.',
+	  desc => 'the <match race> defines the object we\'re looking for. If <match race> matches the monster\'s or the player\'s race, we have a match. Yes, pedestals can detect a player\'s race! E.g. you could create a place where only fireborns can enter, by setting "slaying unnatural". If it is set to "player", any player stepping on the pedestal is a match. Very useful if you want to open a gate for players but not for monsters. If the string starts with \'match \', then it is interpreted as a match expression (e.g. \'match type=POTION\', or \'match type=SPELL in applied type=CONTAINER in inv in originator\'). For details, see http://pod.tst.eu/http://cvs.schmorp.de/deliantra/server/lib/cf/match.pm',
 	  name => 'match race',
 	  type => 'string'
 	}
@@ -4893,7 +4982,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ]
@@ -4904,6 +4993,16 @@ our %TYPE = (
     ],
     name => 'Pedestal',
     use => 'If you want to create a place where only players of a certain race can enter, put a teleporter over your pedestal. So the teleporter is only activated for players of the matching race. Do not use gates, because many other players could sneak in. If you put powerful artifacts into such places, generally set "startequip 1", so that they are preserved for that one race and can\'t be traded to others.'
+  },
+  'Pedestal Trigger' => {
+    desc => 'Pedestal triggers are pedestals which reset after a short period of time. Every time it is either applied or reset, the &lt;connection&gt; value is triggered.',
+    ignore => [
+      $IGNORE_LIST{non_pickable}
+    ],
+    import => [
+      'Pedestal'
+    ],
+    name => 'Pedestal Trigger'
   },
   Pit => {
     attr => [
@@ -4974,7 +5073,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ]
@@ -5465,7 +5564,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ],
@@ -5995,7 +6094,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ]
@@ -6037,7 +6136,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ],
@@ -6597,7 +6696,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ]
@@ -6645,7 +6744,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ],
@@ -6886,6 +6985,14 @@ our %TYPE = (
   Torch => {
     attr => [
       [
+	'is_lightable',
+	{
+	  desc => 'This flag controls whether the torch can be lit up again using a lighter or whether it can only be used once, in which case they can be enabled by simply applying them without any special tools.',
+	  name => 'reignitable',
+	  type => 'bool'
+	}
+      ],
+      [
 	'food',
 	{
 	  desc => 'This field specifies the burning duration of the torch.',
@@ -6918,7 +7025,7 @@ our %TYPE = (
 	}
       ]
     ],
-    desc => 'Torches are a special kind of Lamp, they are worn out by repeatedly lightening them up (when the is_lightable flag is set) and otherwise they can only be used once.',
+    desc => 'Torches are a special kind of Lamp that offer the option of lighting them up without using a lighter (These torches are usually called \'pyrophor torches\'. See also the \'reignitable\' setting). The other kind of torches, that are reignitable, can be put out and put on again using a lighter.',
     name => 'Torch'
   },
   Trap => {
@@ -6934,7 +7041,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ],
@@ -7023,7 +7130,7 @@ our %TYPE = (
 	'move_on',
 	{
 	  desc => 'Which movement types automatically (as opposed to manually) activate this object.',
-	  name => 'movement type',
+	  name => 'movement on',
 	  type => 'movement_type'
 	}
       ],
@@ -7157,7 +7264,7 @@ our %TYPE = (
 	}
       ]
     ],
-    desc => 'A trigger marker is an object that inserts an invisible force (a mark) into a player stepping on it WHEN TRIGGERED. This force does nothing except containing a &lt;key string&gt; which can be discovered by detectors or inventory checkers. It is also possible to use markers for removing marks again. <br><br> Note that the player has no possibility to "see" his own marks, except by the effect that they cause on the maps.',
+    desc => 'A trigger marker is an object that inserts an invisible force (a mark) into a player stepping on it WHEN TRIGGERED. This force does nothing except containing a &lt;key string&gt; which can be discovered by detectors or inventory checkers. It is also possible to use markers for removing marks again. (by setting the "name" slot to the name of the marker to be removed). <br><br> Note that the player has no possibility to "see" his own marks, except by the effect that they cause on the maps.',
     ignore => [
       $IGNORE_LIST{system_object}
     ],
@@ -7977,6 +8084,7 @@ our %ATTR = (
   16 => $TYPE{'Brestplate Armour'},
   17 => $TYPE{Pedestal},
   18 => $TYPE{Altar},
+  19 => $TYPE{'Item Match'},
   20 => $TYPE{'Locked Door'},
   21 => $TYPE{'Special Key'},
   23 => $TYPE{Door},
@@ -7987,6 +8095,7 @@ our %ATTR = (
   29 => $TYPE{'Magic Ear'},
   30 => $TYPE{'Button Trigger'},
   31 => $TYPE{'Altar Trigger'},
+  32 => $TYPE{'Pedestal Trigger'},
   33 => $TYPE{Shield},
   34 => $TYPE{Helmet},
   35 => $TYPE{Horn},
@@ -8034,6 +8143,7 @@ our %ATTR = (
   104 => $TYPE{Bracers},
   106 => $TYPE{Savebed},
   109 => $TYPE{'Wand & Staff'},
+  110 => $TYPE{Inscribable},
   111 => $TYPE{Scroll},
   112 => $TYPE{Director},
   113 => $TYPE{Girdle},
@@ -8153,6 +8263,7 @@ our %TYPENAME = (
   107 => 'POISONCLOUD',
   108 => 'FIREHOLES',
   109 => 'WAND',
+  110 => 'INSCRIBABLE',
   111 => 'SCROLL',
   112 => 'DIRECTOR',
   113 => 'GIRDLE',

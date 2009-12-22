@@ -2,11 +2,13 @@
 
 Deliantra - Deliantra suppport module to read/write archetypes, maps etc.
 
+=over 4
+
 =cut
 
 package Deliantra;
 
-our $VERSION = '1.25';
+our $VERSION = '1.29';
 
 use common::sense;
 
@@ -162,10 +164,15 @@ our @MOVE_TYPE = qw(all walk flying fly_low fly_high swim boat ship);
       '='  => sub { bless [@{$_[0]}], ref $_[0] },
       '""' => \&as_string,
       '>=' => sub { $_[0][0] & $MOVE_TYPE{$_[1]} ? $_[0][1] & $MOVE_TYPE{$_[1]} : undef },
+      '<=' => sub {
+         ($_[0][0] & $MOVE_TYPE{$_[1]}) == $MOVE_TYPE{$_[1]}
+            ? $_[0][1] & $MOVE_TYPE{$_[1]}
+            : undef
+      },
       '+=' => sub { $_[0][0] |= $MOVE_TYPE{$_[1]}; $_[0][1] |=  $MOVE_TYPE{$_[1]}; &normalise },
       '-=' => sub { $_[0][0] |= $MOVE_TYPE{$_[1]}; $_[0][1] &= ~$MOVE_TYPE{$_[1]}; &normalise },
       '/=' => sub { $_[0][0] &= ~$MOVE_TYPE{$_[1]}; &normalise },
-      'x=' => sub {
+      'x=' => sub { # toggle between off, + and -
          my $cur = $_[0] >= $_[1];
          if (!defined $cur) {
             if ($_[0] >= "all") {
@@ -339,6 +346,8 @@ my %MATERIAL = reverse
 sub normalize_object($) {
    my ($ob) = @_;
 
+   delete $ob->{editable}; # deprecated
+
    # convert material bitset to materialname, if possible
    if (exists $ob->{material}) {
       if (!$ob->{material}) {
@@ -391,14 +400,14 @@ sub normalize_object($) {
 
    # convert outdated movement flags to new movement sets
    if (defined (my $v = delete $ob->{no_pass})) {
-      $ob->{move_block} = new Deliantra::MoveType $v ? "all" : "";
+      $ob->{move_block} = new Deliantra::MoveType $v ? "all" : "0";
    }
    if (defined (my $v = delete $ob->{slow_move})) {
       $ob->{move_slow} += "walk";
       $ob->{move_slow_penalty} = $v;
    }
    if (defined (my $v = delete $ob->{walk_on})) {
-      $ob->{move_on}   ||= new Deliantra::MoveType; if ($v) { $ob->{move_on}  += "walk"     } else { $ob->{move_on}   -= "walk"    }
+      $ob->{move_on}   ||= new Deliantra::MoveType; if ($v) { $ob->{move_on}   += "walk"    } else { $ob->{move_on}   -= "walk"    }
    }
    if (defined (my $v = delete $ob->{walk_off})) {
       $ob->{move_off}  ||= new Deliantra::MoveType; if ($v) { $ob->{move_off}  += "walk"    } else { $ob->{move_off}  -= "walk"    }
@@ -808,7 +817,7 @@ sub arch_attr($) {
    }
 
    my @import = ($root);
-   
+
    unshift @import, \%Deliantra::Data::DEFAULT_ATTR
       unless $type == 116;
 
@@ -839,6 +848,20 @@ sub arch_attr($) {
       }
    }
 
+   # remove ignores for "root" type
+   for (map @{$_->[1]}, # section attributes
+           [general => ($root->{attr} || [])],
+           @{$root->{section} || []})
+   {
+      my ($k, $v) = @$_;
+      # skip fixed attributes, if they are ignored thats fine
+      next if $v->{type} eq 'fixed';
+
+      delete $ignore{$k}; # if the attributes are defined explicitly they
+                          # should NOT be ignored. ignore should mainly
+                          # hit imported/inherited attributes.
+   }
+
    $attr->{section} = [
       map !exists $section{$_} ? () : do {
             my $attr = delete $section{$_};
@@ -850,7 +873,6 @@ sub arch_attr($) {
                    @attr_order
             ]
          },
-         
          exists $section{$_} ? [$_ => delete $section{$_}] : (), 
          @section_order
    ];
@@ -988,6 +1010,8 @@ sub load_tilecache() {
          \%cache
       };
 }
+
+=back
 
 =head1 AUTHOR
 

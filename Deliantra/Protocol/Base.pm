@@ -988,25 +988,10 @@ sub feed_ix {
    }
 }
 
-=item $conn->image_info ($numfaces, $chksum, [...image-sets])
-
-=cut
-
-sub image_info { }
-
 sub feed_replyinfo {
    my ($self, $data) = @_;
 
-   if ($data =~ s/^image_sums \d+ \d+ //) {
-      #eval {
-      #   my ($num, $chksum, $faceset, $name) = unpack "n N C C/Z*", $data;
-      #   $self->need_face ($num, "$name$chksum");
-      #};
-
-   } elsif ($data =~ s/^image_info\s+//) {
-      $self->image_info (split /\n/, $data);
-
-   } elsif ($data =~ s/^skill_info\s+//) {
+   if ($data =~ s/^skill_info\s+//) {
       for (split /\012/, $data) {
          my ($id, $name) = split /:/, $_, 2;
          $self->{skill_info}{$id} = $name;

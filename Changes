@@ -1,4 +1,25 @@
-Changes for Deliantra perl extension
+Revision history for Deliantra
+
+1.29  Tue Dec 22 10:51:04 CET 2009
+        - improved torch editor description.
+        - added match_compat to altar/pedestal slaying description
+          for deliantra >= 2.81.
+        - add matches in door/container key strings for deliantra > 2.82.
+        - use "move_block 0" for "no_pass 0" when normalising.
+        - added type=19 (match) for deliantra >= 2.82.
+	- add inscribable type.
+        - minor doc fixes and improvements.
+        - add type 32 (pedestal triggers).
+        - cfmap-tagify no longer patches bidirectionally.
+        - cfmap-plushify now attempts to patch (some) face names as well.
+        - cfmap-plushify now warns about unknown archetypes.
+        - support trailing space in arch files, to import old archetype
+          files.
+        - delete "editable" field when seen.
+        - add mood floor types.
+        - nuke support for image_sums/image_info.
+        - added >= operator for MoveType.
+        - explicitly defined attributes are not ignored anymore.
 
 1.25  Tue Sep 15 21:06:16 CEST 2009
 	- tuned normalisation again to reduce differences.

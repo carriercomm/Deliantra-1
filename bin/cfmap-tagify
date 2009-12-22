@@ -148,7 +148,7 @@ while (defined (my $path = do { local $/ = "\x00"; <$fh> })) {
                my ($exit, $x, $y) = ($o->{slaying}, $o->{hp}, $o->{sp});
                if ($exit =~ /^[\/0-9a-zA-Z\.]/ && $exit ne "/!") {
                   $exit = expand $exit, $path;
-                  if ($exit ne $path && ($target{$path} || $target{$exit} || 0)) {
+                  if ($exit ne $path && $target{$exit}) {
                      if (my $tag = patch_exit $path, $fx, $fy, $exit, $x, $y) {
                         delete $o->{sp};
                         delete $o->{hp};

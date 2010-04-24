@@ -725,6 +725,15 @@
     arch/res/sound.conf.res or a path. If you enter &lt;path&gt; in this
     field it will point to sound/&lt;path&gt;.ext
   </attribute>
+  <attribute arch="unique" editor="unique" type="bool">
+    Unique items exist only one time on a server. If the item
+    is taken, lost or destroyed - it's gone for good.
+  </attribute>
+  <attribute arch="connected" editor="connection" type="string">
+    For "normal" objects the connected value is mainly used for scripting purposes.
+    You can write a string in this field that can be used from a Perl script (find_link function)
+    to find this object, or all objects that got this connected value.
+  </attribute>
 </default_type>
 
 <!-- This ignorelist is for all system objects which are non pickable
@@ -919,6 +928,7 @@
 <type number="18" name="Altar">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     When a player puts a defined number of certain items on the altar,
@@ -966,6 +976,7 @@
 <type number="31" name="Altar Trigger">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     Altar_triggers work pretty much like normal altars
@@ -1397,6 +1408,7 @@
 <type number="92" name="Button">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     When a predefined amount of weigh is placed on a button, the
@@ -1647,6 +1659,7 @@
 <type number="42" name="Creator">
   <ignore>
     <ignore_list name="system_object" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     A creator is an object which creates another object when it
@@ -1700,6 +1713,7 @@
 <type number="51" name="Detector">
   <ignore>
     <ignore_list name="system_object" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     Detectors work quite much like inv. checkers/pedestals: If the detector
@@ -1741,6 +1755,7 @@
 <type number="164" name="Map Script">
   <ignore>
     <ignore_list name="system_object" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     The map script object is a very special object that can react to connected
@@ -1995,6 +2010,7 @@
 <type number="83" name="Duplicator">
   <ignore>
     <ignore_list name="system_object" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     When activated, a duplicator can duplicate, multiply or destroy a pile of
@@ -2174,6 +2190,11 @@
     will be saved beyond map reset. For permanent apartments,
     all floor tiles must be set &lt;unique map&gt;.
   </attribute>
+  <attribute arch="is_buildable" editor="buildable" type="bool">
+    A buildable can be built upon. This is usually used in combination with
+    the unique attribute for player apartments or guild storages. But it's
+    use is not limited to private maps.
+  </attribute>
   <attribute arch_begin="msg" arch_end="endmsg" editor="description" type="text">
     This text may describe the object.
   </attribute>
@@ -2218,6 +2239,11 @@
     will be saved beyond map reset. For permanent apartments,
     all floor tiles must be set &lt;unique map&gt;.
   </attribute>
+  <attribute arch="is_buildable" editor="buildable" type="bool">
+    A buildable can be built upon. This is usually used in combination with
+    the unique attribute for player apartments or guild storages. But it's
+    use is not limited to private maps.
+  </attribute>
   <attribute arch_begin="msg" arch_end="endmsg" editor="description" type="text">
     This text may describe the object.
   </attribute>
@@ -2243,6 +2269,7 @@
 <type number="91" name="Gate">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     Gates play an important role in Deliantra. Gates can be opened
@@ -2327,6 +2354,7 @@
 <type number="93" name="Handle">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     A handle can be applied by players and (certain) monsters.
@@ -2556,6 +2584,7 @@
 <type number="64" name="Inventory Checker">
   <ignore>
     <ignore_list name="system_object" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     Inventory checkers passively check the players inventory for a
@@ -2680,6 +2709,9 @@
     A godgiven item vanishes as soon as the player
     drops it to the ground.
   </attribute>
+  <attribute arch="no_steal" editor="not stealable" type="bool">
+    This item can't be stolen if the flag is set.
+  </attribute>
 </type>
 
 <!--####################################################################-->
@@ -2740,6 +2772,7 @@
 <type number="29" name="Magic Ear">
   <ignore>
     <ignore_list name="system_object" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     Magic_ears trigger a connected value
@@ -2779,6 +2812,7 @@
 <type number="62" name="Magic Wall">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     Magic walls fire spells in a given direction, in regular intervals.
@@ -2865,6 +2899,7 @@
 <type number="55" name="Marker">
   <ignore>
     <ignore_list name="system_object" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     A marker is an object that inserts an invisible force (a mark) into a
@@ -3335,6 +3370,7 @@
 <type number="65" name="Mood Floor">
   <ignore>
     <ignore_list name="system_object" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     As the name implies, mood floors can change the "mood" of
@@ -3483,6 +3519,7 @@
 <type number="17" name="Pedestal">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     Pedestals are designed to detect certain types of living objects.
@@ -3534,6 +3571,7 @@
 <type number="19" name="Item Match">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     Match objects use the deliantra matching language
@@ -3570,6 +3608,7 @@
 <type number="94" name="Pit">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     Pits are holes, transporting the player when he walks (and falls) into them.
@@ -4213,6 +4252,7 @@
 <type number="98" name="Sign &amp; MagicMouth">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     The purpose of a sign or magic_mouth is to display a certain message to
@@ -4251,6 +4291,15 @@
   <attribute arch_begin="msg" arch_end="endmsg" editor="message" type="text">
     This text will be displayed to the player.
   </attribute>
+  <attribute arch="slaying" editor="exit path" type="string">
+    The exit path defines the map that the player is transferred to.
+    Usually, only tagged destinations (e.g. *scorn) make sense for signs,
+    and only if the sign code actually makes use of them.
+  </attribute>
+  <attribute arch="value" editor="value" type="int">
+    Determines the value of the object, in units of silver coins (one
+    platinum coin == 50 silver coins).
+ </attribute>
 </type>
 
 <type number="150" name="Shop Inventory">
@@ -4397,6 +4446,9 @@
     might have 50 different keys on his key-ring. Don't expect
     players to recall their purpose just by their names.
   </attribute>
+  <attribute arch="no_steal" editor="not stealable" type="bool">
+    This item can't be stolen if the flag is set.
+  </attribute>
 </type>
 
 <!--####################################################################-->
@@ -4443,6 +4495,8 @@
   <attribute arch="other_arch" editor="create object" type="string">
   </attribute>
   <attribute arch="sp" editor="cost spellpoints" type="int">
+  </attribute>
+  <attribute arch="dam" editor="damage" type="int">
   </attribute>
   <attribute arch="grace" editor="cost grace" type="int">
   </attribute>
@@ -4559,6 +4613,7 @@
 <type number="41" name="Teleporter">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     When the player walks into a teleporter, he is transferred to a
@@ -4647,6 +4702,7 @@
 <type number="26" name="Timed Gate">
   <ignore>
     <ignore_list name="non_pickable" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     Gates play an important role in Deliantra. Gates can be opened
@@ -4701,6 +4757,7 @@
     <attribute arch="value" />
     <attribute arch="material" />
     <attribute arch="unpaid" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     A trap is a object that can either do damage or trigger another connected object
@@ -4846,6 +4903,7 @@
 <type number="52" name="Trigger Marker">
   <ignore>
     <ignore_list name="system_object" />
+    <attribute arch="connected"/>
   </ignore>
   <description><![CDATA[
     A trigger marker is an object that inserts an invisible force (a mark) into a

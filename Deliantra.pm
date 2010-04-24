@@ -8,7 +8,7 @@ Deliantra - Deliantra suppport module to read/write archetypes, maps etc.
 
 package Deliantra;
 
-our $VERSION = '1.29';
+our $VERSION = '1.30';
 
 use common::sense;
 
@@ -816,26 +816,37 @@ sub arch_attr($) {
       }
    }
 
+   my (%ignore);
    my @import = ($root);
 
-   unshift @import, \%Deliantra::Data::DEFAULT_ATTR
-      unless $type == 116;
-
-   my (%ignore);
-   my (@section_order, %section, @attr_order);
-
+   my @new_import;
    while (my $type = shift @import) {
+      # first import everything we will need:
       push @import,
          grep $_,
             map $Deliantra::Data::TYPE{$_},
                @{$type->{import} || []};
 
-      $attr->{$_} ||= $type->{$_}
-         for qw(name desc use);
-
+      # and compute the ignored attributes
       for (@{$type->{ignore} || []}) {
          $ignore{$_}++ for ref $_ ? @$_ : $_;
       }
+
+      push @new_import, $type;
+   }
+   (@import) = @new_import;
+
+   # then add defaults to the back of the list, so they are added
+   # as last resort.
+   push @import, \%Deliantra::Data::DEFAULT_ATTR
+      unless $type == 116;
+
+   my (@section_order, %section, @attr_order);
+
+   # @import = root, imported, default
+   while (my $type = pop @import) {
+      $attr->{$_} ||= $type->{$_}
+         for qw(name desc use);
 
       for ([general => ($type->{attr} || [])], @{$type->{section} || []}) {
          my ($name, $attr) = @$_;
@@ -843,16 +854,17 @@ sub arch_attr($) {
          for (@$attr) {
             my ($k, $v) = @$_;
             push @attr_order, $k;
-            $section{$name}{$k} ||= $v;
+            $section{$name}{$k} = $v; # overwrite, so that the root decides
          }
       }
    }
 
    # remove ignores for "root" type
-   for (map @{$_->[1]}, # section attributes
-           [general => ($root->{attr} || [])],
-           @{$root->{section} || []})
-   {
+   for (
+      map @{$_->[1]}, # section attributes
+        [general => ($root->{attr} || [])],
+        @{$root->{section} || []}
+   ) {
       my ($k, $v) = @$_;
       # skip fixed attributes, if they are ignored thats fine
       next if $v->{type} eq 'fixed';
@@ -873,7 +885,7 @@ sub arch_attr($) {
                    @attr_order
             ]
          },
-         exists $section{$_} ? [$_ => delete $section{$_}] : (), 
+         exists $section{$_} ? [$_ => delete $section{$_}] : (),
          @section_order
    ];
 

@@ -1,5 +1,16 @@
 Revision history for Deliantra
 
+1.30  Sat Apr 24 10:08:05 CEST 2010
+        - changed the order of overrides in Deliantra.pm of Data.pm.
+          Keep an eye on the gde/editor attributes!
+        - added unique and buildable flags to types.xml.
+        - support post-2.93 server UPD_SP_LEVEL.
+        - added spell damage field to res/types.xml.
+        - fixed range/combat slot encoding.
+        - new version protocol for client and server.
+        - remove support for toggleextendedtext.
+        - support octets_in/out measurement in Deliantra::Protocol::Base.
+
 1.29  Tue Dec 22 10:51:04 CET 2009
         - improved torch editor description.
         - added match_compat to altar/pedestal slaying description

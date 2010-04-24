@@ -44,7 +44,8 @@ sub new {
       max_outstanding => 2,
       token           => "a",
       ncom            => [0..255],
-      client          => "Deliantra Perl Module $VERSION $] $^O $0",
+      s_version       => { },
+
       tilesize        => 32,
       json_coder      => (JSON::XS->new->max_size(1e7)->utf8),
       @_
@@ -54,11 +55,15 @@ sub new {
       if (my ($fh) = @_) {
          $self->{fh} = $fh;
 
-         setsockopt $fh, &Socket::IPPROTO_TCP, &Socket::TCP_NODELAY, 1;
+         setsockopt $fh, Socket::IPPROTO_TCP (), Socket::TCP_NODELAY (), 1;
 
          my $buf;
-         $self->{rw} = AnyEvent->io (fh => $fh, poll => 'r', cb => sub {
-            if (0 < sysread $fh, $buf, 16384, length $buf) {
+         $self->{rw} = AE::io $fh, 0, sub {
+            my $len = sysread $fh, $buf, 16384, length $buf;
+
+            if ($len > 0) {
+               $self->{octets_in} += $len;
+
                for (;;) {
                   last unless 2 <= length $buf;
                   my $len = unpack "n", $buf;
@@ -70,11 +75,12 @@ sub new {
             } else {
                $self->feed_eof;
             }
-         });
+         };
+
+         $self->{on_connect}->(1) if $self->{on_connect};
 
          $self->_drain_wbuf;
 
-         $self->{on_connect}->(1) if $self->{on_connect};
       } else {
          $self->feed_eof;
 
@@ -92,7 +98,6 @@ sub new {
       newmapcmd         => 1,
       mapinfocmd        => 1,
       extcmd            => 2,
-      extendedTextInfos => 1,
       spellmon          => 1,
       fxix              => 3,
       excmd             => 1,
@@ -102,7 +107,15 @@ sub new {
       %{$self->{setup_req} || {} },
    };
 
-   $self->send ("version 1023 1027 $self->{client}");
+   $self->send ("version " . $self->{json_coder}->encode ({
+      protver    => 1,
+      client     => "Deliantra Perl Module [$0]",
+      clientver  => $VERSION,
+      perlver    => $],
+      osver      => $^O,
+      modulever  => $VERSION,
+      %{ $self->{c_version} },
+   }));
 
    # send initial setup req
    ++$self->{setup_outstanding};
@@ -162,9 +175,15 @@ sub feed_goodbye {
 sub feed_version {
    my ($self, $version) = @_;
 
-   chomp $version;
-
-   $self->{version} = $version;
+   if ($version =~ /^(\d+) (\d+) (.*)/) {
+      $self->{s_version} = {
+         sc_version => $1,
+         cs_version => $2,
+         server     => $3,
+      };
+   } else {
+      $self->{s_version} = $self->{json_coder}->decode ($version);
+   }
 }
 
 sub _drain_wbuf {
@@ -175,15 +194,19 @@ sub _drain_wbuf {
    unless ($self->{ww}) {
       my $cb = sub {
          my $len = syswrite $self->{fh}, $self->{wbuf};
+
+         $self->{octets_out} += $len;
+
          substr $self->{wbuf}, 0, $len, "" if $len > 0;
          delete $self->{ww} unless length $self->{wbuf};
       };
 
-      # try write immediately
+      # try write immediately, to reduce latency,
+      # and in the common case, also cpu requirements.
       $cb->();
 
       # still data, so queue
-      $self->{ww} = AnyEvent->io (fh => $self->{fh}, poll => "w", cb => $cb)
+      $self->{ww} = AE::io $self->{fh}, 1, $cb
          if length $self->{wbuf};
    }
 }
@@ -222,16 +245,6 @@ sub setup_req {
 
 sub setup_chk {
    my ($self, $setup) = @_;
-
-   if ($setup->{extendedTextInfos} > 0) {
-      $self->send ("toggleextendedtext 1"); # books
-      $self->send ("toggleextendedtext 2"); # cards
-      $self->send ("toggleextendedtext 3"); # papers
-      $self->send ("toggleextendedtext 4"); # signs
-      $self->send ("toggleextendedtext 5"); # monuments
-      #$self->send ("toggleextendedtext 6"); # scripted dialogs (yeah)
-      $self->send ("toggleextendedtext 7"); # motd
-   }
 
    if (exists $setup->{smoothing}) {
       $self->{smoothing} = $setup->{smoothing} > 0;
@@ -519,10 +532,6 @@ sub drawinfo {
 
 sub msg { }
 
-sub feed_ExtendedTextSet {
-   my ($self, $data) = @_;
-}
-
 sub feed_drawextinfo {
    my ($self, $data) = @_;
 
@@ -634,6 +643,7 @@ sub feed_stats {
       } elsif ($stat == CS_STAT_RANGE || $stat == CS_STAT_TITLE) {
          my $len = unpack "C", substr $data, 0, 1, "";
          $value = substr $data, 0, $len, "";
+         utf8::decode $value;
       } elsif ($stat == CS_STAT_EXP64) {
          my ($hi, $lo) = unpack "NN", substr $data, 0, 8, "";
          $value = $hi * 2**32 + $lo;
@@ -795,11 +805,11 @@ sub feed_upditem {
 
       $spell = {
          tag          => ...,
-         level        => ...,
+         minlevel     => ...,
          casting_time => ...,
          mana         => ...,
          grace        => ...,
-         damage       => ...,
+         level        => ...,
          skill        => ...,
          path         => ...,
          face         => ...,
@@ -834,11 +844,11 @@ sub feed_addspell {
    while (@data) {
       my $spell = {
          tag          => (shift @data),
-         level        => (shift @data),
+         minlevel     => (shift @data),
          casting_time => (shift @data),
          mana         => (unpack "s", pack "S", shift @data),
          grace        => (unpack "s", pack "S", shift @data),
-         damage       => (unpack "s", pack "S", shift @data),
+         level        => (unpack "s", pack "S", shift @data),
          skill        => (shift @data),
          path         => (shift @data),
          face         => (shift @data),
@@ -860,9 +870,9 @@ sub feed_updspell {
    
    my $spell = $self->{spell}{$tag};
 
-   $spell->{mana}   = unpack "s", pack "S", unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_MANA;
-   $spell->{grace}  = unpack "s", pack "S", unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_GRACE;
-   $spell->{damage} = unpack "s", pack "S", unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_DAMAGE;
+   $spell->{mana}  = unpack "s", pack "S", unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_MANA;
+   $spell->{grace} = unpack "s", pack "S", unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_GRACE;
+   $spell->{level} = unpack "s", pack "S", unpack "n", substr $data, 0, 2, "" if $flags & UPD_SP_LEVEL; # was UPD_SP_DAMAGE in earlier servers
    
    $self->spell_update ($spell);
 }

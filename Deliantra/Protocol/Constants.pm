@@ -135,7 +135,7 @@ my %CONSTANTS = (
    UPD_NROF		=> 0x80,
    UPD_SP_MANA	=> 0x01,
    UPD_SP_GRACE	=> 0x02,
-   UPD_SP_DAMAGE	=> 0x04,
+   UPD_SP_LEVEL	=> 0x04,
    SOUND_NORMAL	=> 0,
    SOUND_SPELL	=> 1,
 

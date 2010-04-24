@@ -14,6 +14,7 @@ bin/cfarch-normalize
 bin/cfmap-normalize
 bin/cfmap-plushify
 bin/cfmap-tagify
+bin/cfmap-cavehify
 bin/cfxmlrender
 bin/cf-slotutil
 res2pm
@@ -24,4 +25,3 @@ res/typenumbers.xml
 res/types.xml
 eg/mapread
 META.yml                                 Module meta-data (added by MakeMaker)
-META.json                                Module meta-data (added by MakeMaker)

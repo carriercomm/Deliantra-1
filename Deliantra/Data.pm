@@ -448,6 +448,22 @@ our %DEFAULT_ATTR = (
 	name => 'destroy sound',
 	type => 'string'
       }
+    ],
+    [
+      'unique',
+      {
+	desc => 'Unique items exist only one time on a server. If the item is taken, lost or destroyed - it\'s gone for good.',
+	name => 'unique',
+	type => 'bool'
+      }
+    ],
+    [
+      'connected',
+      {
+	desc => 'For "normal" objects the connected value is mainly used for scripting purposes. You can write a string in this field that can be used from a Perl script (find_link function) to find this object, or all objects that got this connected value.',
+	name => 'connection',
+	type => 'string'
+      }
     ]
   ]
 );
@@ -574,7 +590,8 @@ our %TYPE = (
     ],
     desc => 'When a player puts a defined number of certain items on the altar, then either a spell is casted (on the player) or a connector is triggered. If the latter is the case, the altar works only once. Either way, the sacrificed item disappears.',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Altar'
   },
@@ -655,7 +672,8 @@ our %TYPE = (
     ],
     desc => 'Altar_triggers work pretty much like normal altars (drop sacrifice -> connection activated), except for the fact that they reset after usage. Hence, altar_triggers can be used infinitely.',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Altar Trigger',
     use => 'Altar_triggers are very useful if you want to charge a price for... <UL> <LI> ...an item. -> Connect the altar_trigger (set "last_sp 1") to a creator. <LI> ...opening a gate. -> Connect the altar_trigger (set "last_sp 0") to the gate. <LI> ...information. -> Connect the altar_trigger (set "last_sp 1") to a magic_mouth. </UL> The big advantage over normal altars is the infinite usability of altar_triggers! If there are ten players on one server, they\'re quite grateful if things work more than once. =)'
@@ -1314,7 +1332,8 @@ our %TYPE = (
     ],
     desc => 'When a predefined amount of weigh is placed on a button, the &lt;connection&gt; value is triggered. In most cases this happens when a player or monster steps on it. When the button is "released", the &lt;connection&gt; value get\'s triggered a second time.',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Button'
   },
@@ -1676,7 +1695,8 @@ our %TYPE = (
     ],
     desc => 'A creator is an object which creates another object when it is triggered. The child object can be anything. Creators are VERY useful for all kinds of map-mechanisms. They can even periodically create things.',
     ignore => [
-      $IGNORE_LIST{system_object}
+      $IGNORE_LIST{system_object},
+      'connected'
     ],
     name => 'Creator',
     use => 'Don\'t hesitate to hide your creators under the floor. The created items will still always appear ontop of the floor.'
@@ -1733,7 +1753,8 @@ our %TYPE = (
     ],
     desc => 'Detectors work quite much like inv. checkers/pedestals: If the detector finds a specific object, it toggles its connected value. <br><br> What is "unique" about them, compared to inv. checkers/ pedestals? - First, detectors check their square for a match periodically, not instantly, so generate much higher server load Second, detectors check directly for object names. Third, detectors do not check the inventory of players/monsters.',
     ignore => [
-      $IGNORE_LIST{system_object}
+      $IGNORE_LIST{system_object},
+      'connected'
     ],
     name => 'Detector',
     use => 'Best avoid this type at all costs, use a pedestal instead.'
@@ -2157,7 +2178,8 @@ our %TYPE = (
     ],
     desc => 'When activated, a duplicator can duplicate, multiply or destroy a pile of objects which lies somewhere on top of the duplicator. The duplicator has one arch name specified as &lt;target arch&gt;, and only objects of this archetype can be affected.<br> It will multiply the number of items in the pile, by the &lt;multiply factor&gt;. If the latter is set to zero, it will destroy objects.',
     ignore => [
-      $IGNORE_LIST{system_object}
+      $IGNORE_LIST{system_object},
+      'connected'
     ],
     name => 'Duplicator',
     use => 'I hope it is clear that one must be very cautious when inserting a duplicator anywhere with &lt;multiply factor&gt; greater than one. It is designed to be used for betting mechanisms only (bet -&gt; win/loose). It is <b>not acceptable</b> to allow duplication of anything other than coins, gold and jewels. Besides, it is very important that the chance to loose the input matches the chance to earn winnings.<br> A duplicator with &lt;multiply factor&gt; 3 for example should have a loosing rate of 2/3 = 67%.'
@@ -2457,6 +2479,14 @@ our %TYPE = (
 	}
       ],
       [
+	'is_buildable',
+	{
+	  desc => 'A buildable can be built upon. This is usually used in combination with the unique attribute for player apartments or guild storages. But it\'s use is not limited to private maps.',
+	  name => 'buildable',
+	  type => 'bool'
+	}
+      ],
+      [
 	'msg',
 	{
 	  desc => 'This text may describe the object.',
@@ -2564,6 +2594,14 @@ our %TYPE = (
 	{
 	  desc => 'Unique floor means that any items dropped on that spot will be saved beyond map reset. For permanent apartments, all floor tiles must be set <unique map>.',
 	  name => 'unique map',
+	  type => 'bool'
+	}
+      ],
+      [
+	'is_buildable',
+	{
+	  desc => 'A buildable can be built upon. This is usually used in combination with the unique attribute for player apartments or guild storages. But it\'s use is not limited to private maps.',
+	  name => 'buildable',
 	  type => 'bool'
 	}
       ],
@@ -2743,7 +2781,8 @@ our %TYPE = (
     ],
     desc => 'Gates play an important role in Deliantra. Gates can be opened by activating a button/trigger, by speaking passwords (-> magic_ear) or carrying special key-objects (-> inventory checker). Unlike locked doors, gates can get shut again after a player has passed, which makes them more practical in many cases.',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Gate',
     use => 'Use gates to divide your maps into seperated areas. After solving area A, the player gains access to area B, and so on. Make your maps more complex than "one-way".'
@@ -2813,7 +2852,8 @@ our %TYPE = (
     ],
     desc => 'A handle can be applied by players and (certain) monsters. Every time it is applied, the &lt;connection&gt; value is triggered.',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Handle',
     use => 'Handles are commonly used to move gates. When placing your lever, don\'t forget that some monsters are able to apply it. The ability to apply levers is rare among monsters - but vampires can do it for example.'
@@ -3371,7 +3411,8 @@ our %TYPE = (
     ],
     desc => 'Inventory checkers passively check the players inventory for a specific object. You can set a connected value that is triggered either if that object is present or missing (-&gt; "last_sp") when a player walks over the inv. checker. A valid option is to remove the matching object (usually not recommended, see "last_heal"). <br><br> Alternatively, you can set your inv. checker to block all players that do/don\'t carry the matching object. <br><br> As you can see, inv. checkers are quite powerful, holding a great variety of possibilities.',
     ignore => [
-      $IGNORE_LIST{system_object}
+      $IGNORE_LIST{system_object},
+      'connected'
     ],
     name => 'Inventory Checker',
     use => 'Putting a check_inventory space in front of a gate (one below) and one on the opposite side works reasonably well as a control mechanism. Unlike the key/door-combo, this one works infinite since it is independant from map reset. Use it to put a "structure" into your maps: Player must solve area A to gain access to area B. This concept can be found in nearly every RPG - simple but effective.'
@@ -3428,7 +3469,8 @@ our %TYPE = (
     ],
     desc => 'Match objects use the deliantra matching language (http://pod.tst.eu/http://cvs.schmorp.de/deliantra/server/lib/cf/match.pm) to match items on the same mapspace (if move_on/off are unset) or items trying to enter (if move_blocked is set). If a connected value is given, then it is triggered if the first object matching the expression is put on it, and the last is removed.',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Item Match',
     use => 'If you want to trigger something else (e.g. a gate) when an item is above this object, use the move_on/move_off settings. If you want to keep something from entering if it has (or lacks) a specific item, use the move_blocked setting.'
@@ -3502,6 +3544,14 @@ our %TYPE = (
 	{
 	  desc => 'A godgiven item vanishes as soon as the player drops it to the ground.',
 	  name => 'godgiven item',
+	  type => 'bool'
+	}
+      ],
+      [
+	'no_steal',
+	{
+	  desc => 'This item can\'t be stolen if the flag is set.',
+	  name => 'not stealable',
 	  type => 'bool'
 	}
       ]
@@ -3641,7 +3691,8 @@ our %TYPE = (
     ],
     desc => 'Magic_ears trigger a connected value when the player speaks a specific keyword.',
     ignore => [
-      $IGNORE_LIST{system_object}
+      $IGNORE_LIST{system_object},
+      'connected'
     ],
     name => 'Magic Ear',
     use => 'Whenever you put magic_ears on your maps, make sure there are CLEAR and RELYABLE hints about the keywords somewhere. Don\'t make something like a gate that is opened by speaking "open" or "sesame", expecting the player to figure this out all by himself. <br><br> Magic_ears are typically used for interaction with NPCs. You can create the impression that the NPC actually *does* something according to his conversation with a player. Mostly this means opening a gate or handing out some item, but you could be quite creative here.'
@@ -3748,7 +3799,8 @@ our %TYPE = (
     ],
     desc => 'Magic walls fire spells in a given direction, in regular intervals. Magic walls can contain any spell. However, some spells do not operate very successfully in them. The only way to know is to test the spell you want to use with a wall. <br><br> Several types of magical walls are predefined for you in the archetypes, and can be found on the "connected" Pickmap.',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Magic Wall',
     section => [
@@ -3975,7 +4027,8 @@ our %TYPE = (
     ],
     desc => 'The map script object is a very special object that can react to connected events and executes a perl script in the msg slot.',
     ignore => [
-      $IGNORE_LIST{system_object}
+      $IGNORE_LIST{system_object},
+      'connected'
     ],
     name => 'Map Script',
     use => 'The perl script gets passed a $state value and $activator, $self, $originator objects and can use the set/get/find/timer functions to react to/trigger other objects. See http://pod.tst.eu/http://cvs.schmorp.de/deliantra/server/lib/cf/mapscript.pm for details.'
@@ -4049,7 +4102,8 @@ our %TYPE = (
     ],
     desc => 'A marker is an object that inserts an invisible force (a mark) into a player stepping on it. This force does nothing except containing a &lt;key string&gt; which can be discovered by detectors or inventory checkers. It is also possible to use markers for removing marks again (by setting the "name" slot to the name of the marker to be removed). <br><br> Note that the player has no possibility to "see" his own marks, except by the effect that they cause on the maps.',
     ignore => [
-      $IGNORE_LIST{system_object}
+      $IGNORE_LIST{system_object},
+      'connected'
     ],
     name => 'Marker',
     use => 'Markers hold real cool possibilities for map-making. I encourage you to use them frequently. However there is one negative point about markers: Players don\'t "see" what\'s going on with them. It is your task, as map-creator, to make sure the player is always well informed and never confused. <br><br> Please avoid infinite markers when they aren\'t needed. They\'re using a little space in the player file after all, so if there is no real purpose, set an expire time.'
@@ -4858,7 +4912,8 @@ our %TYPE = (
     ],
     desc => 'As the name implies, mood floors can change the "mood" of a monsters/NPC. For example, an unagressive monster could be turned mad to start attacking. Similar, an agressive monster could be calmed.',
     ignore => [
-      $IGNORE_LIST{system_object}
+      $IGNORE_LIST{system_object},
+      'connected'
     ],
     name => 'Mood Floor',
     use => 'Mood floors are absolutely cool for NPC interaction. To make an unaggressive monster/NPC attack, put a creator with "other_arch furious_floor" under it. Connect the creator to a magic_ear, so the player speaks a keyword like "stupid sucker" - and the monster attacks. <br><br> To turn an NPC into a pet, put a charm_floor under it and connect it directly to a magic_ear. Then the player speaks a keyword like "help me" - and the NPC joins him as pet. <br><br> (Of course you must always give clear hints about keywords! And there is no reason why you couldn\'t use a button/lever/pedestal etc. instead of a magic_ear.)'
@@ -4989,7 +5044,8 @@ our %TYPE = (
     ],
     desc => 'Pedestals are designed to detect certain types of living objects. When a predefined type of living creature steps on the pedestal, the connected value is triggered.',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Pedestal',
     use => 'If you want to create a place where only players of a certain race can enter, put a teleporter over your pedestal. So the teleporter is only activated for players of the matching race. Do not use gates, because many other players could sneak in. If you put powerful artifacts into such places, generally set "startequip 1", so that they are preserved for that one race and can\'t be traded to others.'
@@ -5080,7 +5136,8 @@ our %TYPE = (
     ],
     desc => 'Pits are holes, transporting the player when he walks (and falls) into them. A speciality about pits is that they don\'t transport the player to the exact destination, but within a configurable radius of the destination (never on blocked squares).<br> Optionally, pits can get closed and opened, similar to gates.<br><br> Monsters and items are affected by pits just as well as players. Even multipart monsters can fall through them, given enough space.',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Pit',
     use => 'Pits can add interesting effects to your map. When using them, make sure to use them in a "logical way": Pits should always drop the player to some kind of lower level. They should not be used to randomly interconnect maps like teleporters do.'
@@ -6156,11 +6213,28 @@ our %TYPE = (
 	  name => 'message',
 	  type => 'text'
 	}
+      ],
+      [
+	'slaying',
+	{
+	  desc => 'The exit path defines the map that the player is transferred to. Usually, only tagged destinations (e.g. *scorn) make sense for signs, and only if the sign code actually makes use of them.',
+	  name => 'exit path',
+	  type => 'string'
+	}
+      ],
+      [
+	'value',
+	{
+	  desc => 'Determines the value of the object, in units of silver coins (one platinum coin == 50 silver coins).',
+	  name => 'value',
+	  type => 'int'
+	}
       ]
     ],
     desc => 'The purpose of a sign or magic_mouth is to display a certain message to the player. There are three ways to have the player get this message: The player walking onto it (-&gt; magic_mouth), the player pressing &lt;a&gt;pply (-&gt; sign) or the player triggering a button/handle/etc (-&gt; magic_mouth).',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Sign & MagicMouth',
     use => 'Use signs and magic_mouths, plenty of them! Place magic_mouths to add some true roleplay feeling to your maps, support your storyline or give hints about hidden secrets/dangers. Place signs to provide the player with all kinds of useful information for getting along in your maps.'
@@ -6544,6 +6618,14 @@ our %TYPE = (
 	  name => 'description',
 	  type => 'text'
 	}
+      ],
+      [
+	'no_steal',
+	{
+	  desc => 'This item can\'t be stolen if the flag is set.',
+	  name => 'not stealable',
+	  type => 'bool'
+	}
       ]
     ],
     desc => 'When carrying the appropriate special key, a locked door can be opened. The key will dissapear. <br><br> This object-type can also be used for "passport"-like items: When walking onto an invetory checker, a gate for example might get opened. The "passport" will stay in the player\'s inventory.',
@@ -6618,6 +6700,13 @@ our %TYPE = (
 	'sp',
 	{
 	  name => 'cost spellpoints',
+	  type => 'int'
+	}
+      ],
+      [
+	'dam',
+	{
+	  name => 'damage',
 	  type => 'int'
 	}
       ],
@@ -6872,7 +6961,8 @@ our %TYPE = (
     ],
     desc => 'When the player walks into a teleporter, he is transferred to a different location. The main difference to the object-type exit is the possibility to have teleporters connected to levers/buttons/etc. Sometimes teleporters are activated even against the players will. <br><br> Unlike exits, teleporters can also transfer items and monsters to different locations on the same map.',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Teleporter',
     use => 'When creating maps, I guess sooner or later you\'ll want to have an invisible teleporter. If using "invisible 1", the teleporter can still be discovered with the show_invisible spell. And in some cases you can\'t place it under the floor to prevent this. <br><br> Fortunately, there is a cool trick to make a perfectly invisible teleporter: You simply add teleporter functionality to the floor itself. That means: You take the floor arch (e.g. "flagstone"), set "type 41", and add slaying/hp/sp/connected... everything you need.'
@@ -6977,7 +7067,8 @@ our %TYPE = (
     ],
     desc => 'Gates play an important role in Deliantra. Gates can be opened by activating a button/trigger, by speaking passwords (-> magic_ear) or carrying special key-objects (-> inventory checker). Unlike locked doors, gates can get shut again after a player has passed, which makes them more practical in many cases. Unlike normal gates, timed gates open when triggered but automatically close again after some time.',
     ignore => [
-      $IGNORE_LIST{non_pickable}
+      $IGNORE_LIST{non_pickable},
+      'connected'
     ],
     name => 'Timed Gate',
     use => 'Use gates to divide your maps into separated areas. After solving area A, the player gains access to area B, and so on. Make your maps more complex than "one-way".'
@@ -7112,7 +7203,8 @@ our %TYPE = (
       'weight',
       'value',
       'material',
-      'unpaid'
+      'unpaid',
+      'connected'
     ],
     name => 'Trap',
     use => 'Avoid monsters stepping on your traps. For example, a party of orcs setting off your lightning wall and pit trap is usually a bad idea.'
@@ -7266,7 +7358,8 @@ our %TYPE = (
     ],
     desc => 'A trigger marker is an object that inserts an invisible force (a mark) into a player stepping on it WHEN TRIGGERED. This force does nothing except containing a &lt;key string&gt; which can be discovered by detectors or inventory checkers. It is also possible to use markers for removing marks again. (by setting the "name" slot to the name of the marker to be removed). <br><br> Note that the player has no possibility to "see" his own marks, except by the effect that they cause on the maps.',
     ignore => [
-      $IGNORE_LIST{system_object}
+      $IGNORE_LIST{system_object},
+      'connected'
     ],
     name => 'Trigger Marker',
     use => 'Markers hold real cool possibilities for map-making. I encourage you to use them frequently. However there is one negative point about markers: Players don\'t "see" what\'s going on with them. It is your task, as map-creator, to make sure the player is always well informed and never confused. <br><br> Please avoid infinite markers when they aren\'t needed. They\'re using a little space in the player file after all, so if there is no real purpose, set an expire time.'
